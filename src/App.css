@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-    --font-smooch-sans: "Smooch Sans"
+    --font-inria-sans: "Inria Sans";
+    --breakpoint-xxs: 20rem;
+    --breakpoint-xs: 24rem;
 }
