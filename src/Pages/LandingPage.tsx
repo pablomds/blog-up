@@ -1,16 +1,8 @@
-import MobileNavBar from '../Components/NavBar/MobileNavBar'
-import NavBar from '../Components/NavBar/NavBar';
 import FreeImaginationSvg from '../Assets/Svg/Ilustration.svg'
 
 const LandingPage = () => {
   return (
-    <div className="flex flex-col min-h-screen min-w-screen overflow-hidden justify-center items-center pt-2 px-3 xs:pt-5 xs:px-6 gap-y-14 xs:gap-y-20 md:px-15 md:pt-0 bg-[#2C2C2C] relative select-none">
-      <div className="md:hidden">
-          <MobileNavBar />
-      </div>
-      <div className="hidden md:block">
-        <NavBar />
-      </div>
+    <div id="home" className="flex flex-col min-h-screen min-w-screen overflow-hidden justify-center items-center pt-2 px-3 xs:pt-5 xs:px-6 gap-y-14 xs:gap-y-20 md:px-15 md:pt-0 bg-[#2C2C2C] relative select-none">
       <div className="flex flex-col md:flex-row gap-y-16 xs:gap-y-20 md:gap-y-0">
         <div className="flex flex-col gap-y-10">
           <h1 className="font-inria-sans font-bold text-5xl xs:text-6xl sm:text-7xl lg:text-8xl">Blog Up</h1>

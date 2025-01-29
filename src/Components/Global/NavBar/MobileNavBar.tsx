@@ -4,10 +4,9 @@ import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx"
 import { AiOutlineClose } from "react-icons/ai"
 import { motion, AnimatePresence } from 'motion/react';
+import { HashLink as Link } from 'react-router-hash-link'
 
-const navLinks = ["Home", "About", "Contact", "Login", "Sign Up"];
-
-const MobileNavBar = () => {
+const MobileNavBar = ({ navLinks } : any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropDownVariants = {
@@ -75,23 +74,17 @@ const MobileNavBar = () => {
     };
 
     return (
-      <motion.nav
-        initial={{
-          x: -200
-        }}
-        animate={{
-          x: 0,
-          y: 0
-        }}
-        exit="exit"
+      <motion.div
+        initial={{ x: -200 }}
+        animate={{ x: 0 }}
         transition={transition}
         onClick={() => setIsOpen(true)}
-        className="absolute top-0 left-0 pt-5 pl-6"
+        className="fixed top-5 left-5 z-50"
       >
-        <div className="bg-[#101010] p-2 rounded-full shadow-md">
+        <div className="bg-[#101010] p-3 rounded-full shadow-md cursor-pointer">
           <RxHamburgerMenu size={20} className="text-white" />
         </div>
-      </motion.nav>
+      </motion.div>
     );
   };
 
@@ -106,8 +99,16 @@ const MobileNavBar = () => {
           animate="visible"
           exit="exit"
         >
-          {navLinks.map((item) => {
-            return <motion.li key={item} className="w-full flex justify-center items-center font-inria-sans text-center h-[40px] active:bg-[#FF5E5B] duration-100 text-[24px]" variants={linkItemVariants}>{item}</motion.li>;
+          {navLinks.map((navItem: any, index: number) => {
+            return (
+              <motion.li
+                key={index}
+                className="w-full flex justify-center items-center font-inria-sans text-center h-[40px] active:bg-[#FF5E5B] duration-100 text-[24px]"
+                variants={linkItemVariants}
+              >
+                <Link onClick={() => setIsOpen(false)} key={index} to={navItem.link}>{navItem.label}</Link> 
+              </motion.li>
+            );
           })}
         </motion.ul>
       </>
@@ -117,7 +118,7 @@ const MobileNavBar = () => {
 
   const OpenedNavBar = () => {
     return (
-      <motion.nav
+      <motion.div
         variants={dropDownVariants}
         initial="hidden"
         animate="visible"
@@ -137,19 +138,16 @@ const MobileNavBar = () => {
           </div>
         </div>
         <NavBarLinks />
-      </motion.nav>
+      </motion.div>
     );
   };
 
 
-  
-
-
   return (
-    <>
+    <nav className="block md:hidden">
       <AnimatePresence>{isOpen && <OpenedNavBar />}</AnimatePresence>
       <AnimatePresence>{!isOpen && <ClosedNavBar />}</AnimatePresence>
-    </>
+    </nav>
   );
 }
 export default MobileNavBar
