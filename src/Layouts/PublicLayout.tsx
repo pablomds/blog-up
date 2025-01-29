@@ -1,12 +1,22 @@
 import React, { ReactNode } from 'react'
-import { Outlet } from 'react-router'
+
+import NavBar from '../Components/Global/NavBar/NavBar'
+
+import LandingPage from '../Pages/LandingPage'
+import AboutPage from '../Pages/Public/AboutPage'
 
 interface IPublicLayout {
     children?: ReactNode
 }
 
 const PublicLayout = (props: IPublicLayout) => {
-  return <>{props.children ? props.children : <Outlet />}</>;
+  return (
+    <div className="overflow-y-scroll hide-scrollbar h-screen">
+      <NavBar />
+      <LandingPage />
+      <AboutPage />
+    </div>
+  );
 };
 
 export default PublicLayout
