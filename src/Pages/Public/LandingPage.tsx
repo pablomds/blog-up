@@ -1,4 +1,4 @@
-import FreeImaginationSvg from '../Assets/Svg/Ilustration.svg'
+import FreeImaginationSvg from '../../Assets/Svg/Ilustration.svg'
 
 const LandingPage = () => {
   return (
