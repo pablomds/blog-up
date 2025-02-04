@@ -1,21 +1,22 @@
-import React, { ReactNode } from 'react'
+import Lenis from 'lenis'
 
 import NavBar from '../Components/Global/NavBar/NavBar'
 
-import LandingPage from '../Pages/LandingPage'
+import LandingPage from '../Pages/Public/LandingPage'
 import AboutPage from '../Pages/Public/AboutPage'
 
-interface IPublicLayout {
-    children?: ReactNode
-}
+const PublicLayout = () => {
 
-const PublicLayout = (props: IPublicLayout) => {
+  new Lenis({
+    autoRaf: true,
+  });
+
   return (
-    <div className="overflow-y-scroll hide-scrollbar h-screen">
+    <>
       <NavBar />
       <LandingPage />
       <AboutPage />
-    </div>
+    </>
   );
 };
 

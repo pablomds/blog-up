@@ -6,12 +6,14 @@
     --breakpoint-xs: 24rem;
 }
 
-/* Hide scrollbar but allow scrolling */
-.hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-}
-
-.hide-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE & Edge */
-}
+/* Hide scrollbar for Chrome, Safari */
+/* html, body {
+    overflow-y: auto;
+    scrollbar-width: none;  
+    -ms-overflow-style: none;  
+  } */
+  
+  /* Hide scrollbar for WebKit browsers */
+  html::-webkit-scrollbar {
+    display: none;
+  }
