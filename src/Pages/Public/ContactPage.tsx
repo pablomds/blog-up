@@ -1,34 +1,41 @@
 import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import backgroundContact from "../../Assets/Background/background-contact.jpg";
 import { motion } from "motion/react";
+import emailjs from '@emailjs/browser';
+
+import backgroundContact from "../../Assets/Background/background-contact.jpg";
 import { useToast } from "../../Context/ToastContext";
 
 const contactSchema = yup.object({
-  name: yup.string().required("Your name is required"),
+  name: yup.string().max(40, "Your must have less than 40 characters").required("Your name is required"),
   email: yup.string().required("Your email is required").email("Your email must be valid"),
   message: yup.string().required("Your message is required")
 })
+
+type ContactFormData = yup.InferType<typeof contactSchema>;
 
 const ContactPage = () => {
 
   const toast = useToast();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema),
     mode: "onSubmit" // Errors will only show after submitting
   });
   
   const [isEmailSent, setIsEmailSent] = useState<boolean>(true);
 
-  const onSubmit = async (formValues: any) => {
+  const onSubmit = async (formValues: ContactFormData) => {
     try {
-      console.log(formValues)
+      await emailjs.send(import.meta.env.VITE_EMAIL_JS_SERVICE_ID, import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID, formValues , {
+        publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
+      })
       toast?.open("Success your email was sent !", "success")
     } catch (error) {
-      
+      toast?.open("Internal error occured while sending your email!", "failed")
     }
   }
 
