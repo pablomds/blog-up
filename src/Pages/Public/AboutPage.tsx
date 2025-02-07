@@ -13,6 +13,7 @@ const AboutPage = () => {
       >
         {/* Overlay transparent avec opacité uniquement sur l'image de fond */}
         <div className="absolute top-0 left-0 w-full h-full bg-[#2C2C2C] opacity-97"></div>
+        <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-[#2C2C2C] to-transparent" />
 
         <div className="container mx-auto px-2.5 pt-13 flex flex-col gap-y-6 relative z-10">
           <h1 className="font-inria-sans font-bold text-center text-5xl">
@@ -55,7 +56,7 @@ const AboutPage = () => {
     );
   };
 
-  const SECTION_HEIGHT = 1500;
+  const SECTION_HEIGHT = 1200;
 
   const Hero = () => {
 
@@ -201,7 +202,7 @@ const AboutPage = () => {
     <div id="about" className="bg-[#2C2C2C]">
       <Mobile />
       <Hero />
-      <div className="h-screen"/>
+      <div className="max-md:hidden h-1/4"/>
     </div>
   );
 }

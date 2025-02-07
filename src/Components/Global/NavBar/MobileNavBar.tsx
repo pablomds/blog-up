@@ -66,29 +66,6 @@ const MobileNavBar = ({ navLinks } : any) => {
     },
   };
 
-  const ClosedNavBar = () => {
-    const transition = {
-      duration: 0.3,
-      delay: 0.5,
-      ease: [0, 0.71, 0.2, 1.01],
-    };
-
-    return (
-      <motion.div
-        initial={{ x: -200 }}
-        animate={{ x: 0 }}
-        transition={transition}
-        onClick={() => setIsOpen(true)}
-        className="fixed top-5 left-5 z-50"
-      >
-        <div className="bg-[#101010] p-3 rounded-full shadow-md cursor-pointer">
-          <RxHamburgerMenu size={20} className="text-white" />
-        </div>
-      </motion.div>
-    );
-  };
-
-
   const NavBarLinks = () => {
     return (
       <>
@@ -115,6 +92,28 @@ const MobileNavBar = ({ navLinks } : any) => {
     );
   };
 
+  const ClosedNavBar = () => {
+    const transition = {
+      duration: 0.3,
+      delay: 0.5,
+      ease: [0, 0.71, 0.2, 1.01],
+    };
+
+    return (
+      <motion.div
+        initial={{ x: -200 }}
+        animate={{ x: 0 }}
+        transition={transition}
+        onClick={() => setIsOpen(true)}
+        className="fixed top-5 left-5 z-50"
+      >
+        <div className="bg-[#101010] p-3 rounded-full shadow-md cursor-pointer">
+          <RxHamburgerMenu size={20} className="text-white" />
+        </div>
+      </motion.div>
+    );
+  };
+
 
   const OpenedNavBar = () => {
     return (
@@ -123,7 +122,7 @@ const MobileNavBar = ({ navLinks } : any) => {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="min-w-screen min-h-screen bg-[#101010] gap-y-12 select-none top-0 left-0 z-50 overflow-hidden absolute"
+        className="min-w-screen min-h-screen bg-[#101010] gap-y-12 select-none top-0 left-0 z-50 overflow-hidden fixed"
       >
         <div
           className="w-full flex justify-between px-3 py-3"

@@ -1,22 +1,18 @@
-import Lenis from 'lenis'
+import NavBar from '../Components/Global/NavBar/NavBar';
 
-import NavBar from '../Components/Global/NavBar/NavBar'
-
-import LandingPage from '../Pages/Public/LandingPage'
-import AboutPage from '../Pages/Public/AboutPage'
+import LandingPage from '../Pages/Public/LandingPage';
+import AboutPage from '../Pages/Public/AboutPage';
+import ContactPage from '../Pages/Public/ContactPage';
 
 const PublicLayout = () => {
 
-  new Lenis({
-    autoRaf: true,
-  });
-
   return (
-    <>
+    <div className="bg-[#2C2C2C]">
       <NavBar />
       <LandingPage />
       <AboutPage />
-    </>
+      <ContactPage/>
+    </div>
   );
 };
 
