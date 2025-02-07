@@ -120,7 +120,7 @@ const ContactPage = () => {
             <div className="flex flex-col">
               <textarea
                 {...register("message")}
-                className="font-inria-sans w-full h-[215px] border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none"
+                className="font-inria-sans w-full h-[215px] border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none resize-none"
                 placeholder="Whats your message ?"
               />
               <span
