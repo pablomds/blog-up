@@ -1,10 +1,12 @@
+import { HashLink as Link } from 'react-router-hash-link';
+
 import FreeImaginationSvg from '../../Assets/Svg/Ilustration.svg'
 import Slide from '../../Components/Global/Slide/Slide';
 
 const LandingPage = () => {
   return (
     <Slide delay={0.3}>
-    <div id="home" className="flex flex-col min-h-screen min-w-screen overflow-hidden justify-center items-center pt-2 px-3 xs:pt-5 xs:px-6 gap-y-14 xs:gap-y-20 md:px-15 md:pt-0 bg-[#2C2C2C] relative select-none">
+    <div id="home" className="flex flex-col min-h-screen min-w-screen overflow-hidden justify-center items-center pt-2 px-3 xs:pt-5 xs:px-6 gap-y-14 xs:gap-y-20 md:px-15 md:pt-0 relative select-none">
       <div className="flex flex-col md:flex-row gap-y-16 xs:gap-y-20 md:gap-y-0">
         <div className="flex flex-col gap-y-10">
           <h1 className="font-inria-sans font-bold text-5xl xs:text-6xl sm:text-7xl lg:text-8xl">Blog Up</h1>
@@ -17,12 +19,12 @@ const LandingPage = () => {
             bring your vision to life.
           </p>
           <div>
-            <a
-              href=""
-              className="font-inria-sans text-[#0E0E0E] text-lg xs:text-xl lg:text-2xl bg-white py-1 px-11 rounded-[10px]"
+            <Link
+              to="#about"
+              className="font-inria-sans text-[#0E0E0E] text-lg xs:text-xl lg:text-2xl bg-blog-up-white py-1 px-11 rounded-[10px]"
             >
               READ MORE
-            </a>
+            </Link>
           </div>
         </div>
         <div className="flex justify-center items-center md:justify-start md:items-start">
