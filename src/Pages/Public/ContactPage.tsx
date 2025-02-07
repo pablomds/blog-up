@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { motion } from "motion/react";
 import emailjs from '@emailjs/browser';
 
+import Loader from "../../Components/Global/Loader/Loader";
 import backgroundContact from "../../Assets/Background/background-contact.jpg";
 import { useToast } from "../../Context/ToastContext";
 
@@ -26,14 +27,20 @@ const ContactPage = () => {
     mode: "onSubmit" // Errors will only show after submitting
   });
   
-  const [isEmailSent, setIsEmailSent] = useState<boolean>(true);
+  const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
+
+    useEffect(() => {
+      const timer = setTimeout(() => setIsEmailSent(false), 3000); // Hide after 3s
+      return () => clearTimeout(timer);
+    }, [isEmailSent]);
 
   const onSubmit = async (formValues: ContactFormData) => {
+    setIsEmailSent(true);
     try {
       await emailjs.send(import.meta.env.VITE_EMAIL_JS_SERVICE_ID, import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID, formValues , {
         publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
       })
-      toast?.open("Success your email was sent !", "success")
+      toast?.open("Success your email was sent!", "success")
     } catch (error) {
       toast?.open("Internal error occured while sending your email!", "failed")
     }
@@ -126,9 +133,9 @@ const ContactPage = () => {
             </div>
             <button
               type="submit"
-              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 md:max-h-[40px] md:max-w-[150px] text-blog-up-black cursor-pointer"
+              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 md:max-h-[40px] md:max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
             >
-              SEND IT
+              { isEmailSent ? <Loader/> : "SEND IT"}
             </button>
           </form>
         </div>
