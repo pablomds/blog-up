@@ -88,6 +88,12 @@ Make sure you activated every services from Firebase you want to use such as (au
 
 # Extra Informations
 
+Don't forget to run this command in order to clear local branches that are no longer in remote :
+
+```sh
+git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d
+```
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
