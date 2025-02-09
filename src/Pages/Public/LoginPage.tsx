@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     const { register, handleSubmit,control, formState: { errors } } = useForm<FormLogin>({
       resolver: yupResolver(loginSchema),
-      mode: "onSubmit" // Errors will only show after submitting
+      mode: "onSubmit"
     });
 
     const onSubmit = async (formLogin: FormLogin) => {
@@ -35,9 +35,9 @@ const LoginPage = () => {
   return (
     <div className="h-screen w-screen overflow-hidden relative md:flex md:flex-row md:gap-x-26 select-none">
       <div className="hidden md:flex h-full w-1/4 left-0 justify-center items-center bg-white bg-center bg-cover relative" style={{ backgroundImage: `url(${backgroundLogin})` }}>
-        <div className="w-[5px] h-full bg-blog-up-white z-10 absolute right-0"/>
-        <div className="font-inria-sans -rotate-90 text-8xl z-10">Login</div>
-        <div className="absolute bg-black h-full w-full opacity-50" />
+      <div className="w-[5px] h-full z-10 bg-blog-up-white mix-blend-exclusion absolute right-0 opacity-75" />
+      <div className="font-inria-sans -rotate-90 text-8xl z-10 mix-blend-difference text-nowrap">Login</div>
+        <div className="absolute bg-black h-full w-full opacity-75" />
       </div>
       <div className="h-full w-full px-6 flex flex-col justify-center gap-10">
         <div className="text-center xs:text-start">
@@ -48,7 +48,7 @@ const LoginPage = () => {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col w-full gap-y-8"
+          className="flex flex-col w-full gap-y-4"
         >
           <Controller
             control={control}
