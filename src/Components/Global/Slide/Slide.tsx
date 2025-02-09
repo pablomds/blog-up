@@ -21,19 +21,18 @@ export default function Slide({ children, delay, className }: props) {
   return (
     <motion.div
       ref={ref}
-      variants={{
-        hidden: { opacity: 0, translateX: 90 },
-        visible: { opacity: 1, translateX: 0 },
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 1.2, ease: "easeOut" }, // Slower appearance
       }}
-      transition={{
-        type: "spring",
-        duration: 0.2,
-        damping: 8,
-        delay: delay,
-        stiffness: 100,
+      exit={{
+        opacity: 0,
+        y: 50,
+        transition: { duration: 0.8, ease: "easeInOut" }, // Faster disappearance
       }}
-      initial="hidden"
-      animate={controls}
+      viewport={{ amount: 0.2 }}
       className={className}
     >
       {children}
