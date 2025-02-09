@@ -40,17 +40,16 @@ const logInWithEmailAndPassword = async (
   }
 };
 
-const registerWithEmailAndPassword = async (
+const signUpWithEmailAndPassword = async (
   email: string,
   password: string
 ): Promise<string | void> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const uid = res.user.uid;
-    const newUser = { email: email, uid: uid, auth_provider: "local" };
-    return newUser.uid;
-  } catch (err) {
-    console.error("Auth Error : ", err);
+    return uid;
+  } catch (error) {
+    console.error("Error On signUpWithEmailAndPassword() ", error);
   }
 };
 
@@ -91,7 +90,7 @@ const logout = () => signOut(auth);
 export {
   signInWithGoogle,
   logInWithEmailAndPassword,
-  registerWithEmailAndPassword,
+  signUpWithEmailAndPassword,
   sendPasswordReset,
   logout,
   isLoggedIn,
