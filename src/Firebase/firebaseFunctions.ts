@@ -2,7 +2,7 @@ import _ from "lodash"
 import { collection, query, where } from "firebase/firestore"
 import { doc, getDoc, getDocs, updateDoc , addDoc, deleteDoc } from "firebase/firestore"
 import { getStorage, ref, listAll, uploadBytesResumable, getDownloadURL, deleteObject  } from "firebase/storage"
-
+import { utils } from "../Utils/utils"
 
 import { db, storage } from "./firebaseConfig"
 
@@ -98,20 +98,25 @@ export const getAllDataFromCollectionEvenDisable = async (collectionName: string
     return allDataFromCollection
 };
 
-export const addDocumentToCollection = async (collectionName: string, dataToCollection: any): Promise<string> => {
-    // dataToCollection.creation_date = utils.getUnixTimeStamp(new Date());
-    // dataToCollection.updated_date = utils.getUnixTimeStamp(new Date());
-    dataToCollection.is_active = true;
-    const addedDocumentToCollection = collection(db, collectionName);    
-    const newDocRef = await addDoc(addedDocumentToCollection, dataToCollection);
-    return newDocRef.id
+export const addDocumentToCollection = async (collectionName: string, dataToCollection: any): Promise<string | void> => {
+    try {
+        dataToCollection.created_date = utils.getUnixTimeStamp(new Date());
+        dataToCollection.updated_date = utils.getUnixTimeStamp(new Date());
+        dataToCollection.is_active = true;
+        const addedDocumentToCollection = collection(db, collectionName);    
+        const newDocRef = await addDoc(addedDocumentToCollection, dataToCollection);
+        return newDocRef.id
+    } catch (error) {
+        console.log('Error On addDocumentToCollection()', error);
+    }
+
     
 };
 
 export const updateDocumentToCollection = async (collectionName: string, dataToUpdateId: string, dataToUpdate: any): Promise<void> => {
 
     let docToUpdate = _.omitBy(dataToUpdate, _.overSome([_.isNil, _.isNaN]));
-    // docToUpdate.updated_date = utils.getUnixTimeStamp(new Date());
+    docToUpdate.updated_date = utils.getUnixTimeStamp(new Date());
     const docRefToUpdate = doc(db, collectionName, dataToUpdateId);
     await updateDoc(docRefToUpdate, docToUpdate);
 
