@@ -18,7 +18,10 @@ import {
   addDoc,
 } from "firebase/firestore";
 
+import { User } from "firebase/auth";
+
 const googleProvider = new GoogleAuthProvider();
+
 
 const signInWithGoogle = async () => {
   try {
@@ -32,11 +35,20 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<void | string> => {
+): Promise<{ status: "failed" | "success", user: User | undefined } | { status: "failed" | "success", internalError: boolean }> => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    return console.error("Error occured : ", err);
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    if (user) {
+      return { status: "success", user }
+    } else {
+      return { status: "failed", user: undefined}
+    }
+  } catch (error) {
+    console.error("Error Occured On logInWithEmailAndPassword() ", error);
+    return {
+      status: "failed",
+      internalError: true
+    }
   }
 };
 

@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AtSign, User, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router';
+import { useNavigate } from "react-router";
 
 import Input from '../../Components/Global/Input/Input';
 import { createUser } from '../../Controllers/usersControllers';
@@ -15,6 +16,7 @@ import backgroundSignUp from "../../Assets/Background/background-sign-up.jpg";
 
 const SignUpPage = () => {
 
+    const navigate = useNavigate();
     const toast = useToast();
     const [showPassword, setShowPassword] = useState(true);
     const [showConfirmPassword, setConfirmShowPassword] = useState(true);
@@ -32,11 +34,12 @@ const SignUpPage = () => {
     const onSubmit = async (formValues: FormSignUpSchema) => {
       const { email, name, password } = formValues;
       try {
-        const uid = await signUpWithEmailAndPassword(email, password);
-        if (uid) await createUser(email, name, uid);
+        const uId = await signUpWithEmailAndPassword(email, password);
+        if (uId) await createUser(email, name, uId);
         toast?.open("You're Signed Up!", "success");
+        navigate("/login")
       } catch (error) {
-        toast?.open("Sign Up failed!", "failed")
+        toast?.open("Sign Up failed!", "failed");
       }
     };
   return (

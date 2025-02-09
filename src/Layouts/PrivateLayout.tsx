@@ -6,7 +6,7 @@ interface IPrivateLayout {
     currentUser?: any | undefined
 }
 
-const PrivateLayout = (props: IPrivateLayout) => {
+const PrivateLayout: React.FC<IPrivateLayout> = (props) => {
   return (
     <div>{props.children ? props.children : <Outlet />}</div>
   )

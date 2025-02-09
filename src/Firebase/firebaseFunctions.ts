@@ -84,7 +84,7 @@ export const getAllDataFromCollection = async (collectionName: string) => {
       allDataFromCollection.push({ ...doc.data(), id: doc.id })
     });
 
-    return _.filter(allDataFromCollection, 'is_active')
+    return _.filter(allDataFromCollection, 'isActive')
 };
 
 export const getAllDataFromCollectionEvenDisable = async (collectionName: string) => {
@@ -100,9 +100,9 @@ export const getAllDataFromCollectionEvenDisable = async (collectionName: string
 
 export const addDocumentToCollection = async (collectionName: string, dataToCollection: any): Promise<string | void> => {
     try {
-        dataToCollection.created_date = utils.getUnixTimeStamp(new Date());
-        dataToCollection.updated_date = utils.getUnixTimeStamp(new Date());
-        dataToCollection.is_active = true;
+        dataToCollection.createdDate = utils.getUnixTimeStamp(new Date());
+        dataToCollection.updatedDate = utils.getUnixTimeStamp(new Date());
+        dataToCollection.isActive = true;
         const addedDocumentToCollection = collection(db, collectionName);    
         const newDocRef = await addDoc(addedDocumentToCollection, dataToCollection);
         return newDocRef.id
@@ -116,7 +116,7 @@ export const addDocumentToCollection = async (collectionName: string, dataToColl
 export const updateDocumentToCollection = async (collectionName: string, dataToUpdateId: string, dataToUpdate: any): Promise<void> => {
 
     let docToUpdate = _.omitBy(dataToUpdate, _.overSome([_.isNil, _.isNaN]));
-    docToUpdate.updated_date = utils.getUnixTimeStamp(new Date());
+    docToUpdate.updatedDate = utils.getUnixTimeStamp(new Date());
     const docRefToUpdate = doc(db, collectionName, dataToUpdateId);
     await updateDoc(docRefToUpdate, docToUpdate);
 
