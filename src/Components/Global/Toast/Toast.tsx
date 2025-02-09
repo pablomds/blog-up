@@ -13,7 +13,7 @@ type ToastProviderProperties = {
 
 
 type ToastType = {
-    variant: string;
+    variant: "success" | "failed";
     message: string;
     id: number;
 };
@@ -67,7 +67,7 @@ export const ToastProvider = ({
 
     const [toasts, setToasts] = useState<ToastType[]>([]);
 
-    const openToast = (message: string, variant: string) => {
+    const openToast = (message: string, variant: "success" | "failed") => {
         const newToast = {
             variant,
             id: Date.now(),
