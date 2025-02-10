@@ -35,14 +35,13 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<{ status: "failed" | "success", user: User | undefined } | { status: "failed" | "success", internalError: boolean }> => {
+): Promise<
+| { status: "success"; user: User }
+| { status: "failed"; internalError: boolean }
+> => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    if (user) {
-      return { status: "success", user }
-    } else {
-      return { status: "failed", user: undefined}
-    }
+    return { status: "success", user }
   } catch (error) {
     console.error("Error Occured On logInWithEmailAndPassword() ", error);
     return {
