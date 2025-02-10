@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AtSign, Eye, EyeOff } from 'lucide-react';
+import { useDispatch } from "react-redux";
 import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { LoginSchema, FormLogin } from '../../Schemas/LoginSchema';
 import { logInWithEmailAndPassword } from '../../Firebase/authentication';
+import { login } from '../../Redux/Slices/userSlice';
 
 import Input from '../../Components/Global/Input/Input';
 import Loader from '../../Components/Global/Loader/Loader';
@@ -14,10 +17,12 @@ import backgroundLogin from "../../Assets/Background/background-login.jpg"
 import { useToast } from '../../Context/ToastContext';
 
 const LoginPage = () => {
-
-  const toast = useToast();
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
+
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
     const { register, handleSubmit,control, formState: { errors } } = useForm<FormLogin>({
       resolver: yupResolver(LoginSchema),
@@ -28,8 +33,10 @@ const LoginPage = () => {
       const { email, password } = formLogin;
       try {
         const response = await logInWithEmailAndPassword(email, password);
-        if (response.status === "success") {
+        if (response.status === "success")  {
           toast?.open("You're now logged in!", response.status);
+          dispatch(login(response.user));
+          navigate("/lastest")
         } else {
           toast?.open("Email/Password incorrect!", response.status)
         }
