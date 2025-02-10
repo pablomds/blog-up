@@ -1,16 +1,24 @@
-import { Routes, Route } from 'react-router';
-import {PublicRoutes, PrivateRoutes} from "./Routes/Routes"
+import { Routes, BrowserRouter as Router } from 'react-router';
+import { Provider } from 'react-redux';
+
+import store from './Redux/store';
+import { PublicRoutes, PrivateRoutes } from "./Routes/Routes";
+import { ToastProvider } from './Components/Global/Toast/Toast.tsx'
 import './App.css';
 
 
 function App() {
 
   return (
-    <Routes>
-      {PublicRoutes()}
-      {PrivateRoutes()}
-    </Routes>
-  )
+    <ToastProvider>
+        <Router>
+          <Routes>
+            {PublicRoutes()}
+            {PrivateRoutes()}
+          </Routes>
+        </Router>
+    </ToastProvider>
+  );
 }
 
 export default App
