@@ -34,8 +34,8 @@ const SignUpPage = () => {
     const onSubmit = async (formValues: FormSignUpSchema) => {
       const { email, name, password } = formValues;
       try {
-        const uId = await signUpWithEmailAndPassword(email, password);
-        if (uId) await createUser(email, name, uId);
+        const uid = await signUpWithEmailAndPassword(email, password);
+        if (uid) await createUser(email, name, uid);
         toast?.open("You're Signed Up!", "success");
         navigate("/login")
       } catch (error) {
