@@ -15,6 +15,7 @@ import Loader from '../../Components/Global/Loader/Loader';
 
 import backgroundLogin from "../../Assets/Background/background-login.jpg"
 import { useToast } from '../../Context/ToastContext';
+import { getUserByUid } from '../../Controllers/usersControllers';
 
 const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
@@ -35,8 +36,9 @@ const LoginPage = () => {
         const response = await logInWithEmailAndPassword(email, password);
         if (response.status === "success")  {
           toast?.open("You're now logged in!", response.status);
-          dispatch(login(response.user));
-          navigate("/lastest")
+          const user = await getUserByUid(response.user.uid);
+          dispatch(login(user));
+          navigate("/create-new-post")
         } else {
           toast?.open("Email/Password incorrect!", response.status)
         }
