@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from "./Slices/userSlice";
 import authReducer from "./Slices/authSlice";
+import postsReducer from "./Slices/postsSlice"
 // Import other reducers if needed
 // import authReducer from './Slices/authSlice';
 
@@ -22,6 +23,7 @@ const rootReducer = (state: any, action: any) => {
   return combineReducers({
     user: userReducer,
     auth: authReducer,
+    posts: postsReducer
   })(state, action);
 };
 
