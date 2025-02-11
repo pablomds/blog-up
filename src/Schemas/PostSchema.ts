@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 
 export const PostSchema = yup.object({
-  title: yup.string().max(50, "Your title must have less than 50 characters").required("Your title is required"),
+  title: yup.string().max(60, "Your title must have less than 60 characters").required("Your title is required"),
   text: yup
     .string()
-    .max(500, "Your text must have less than 500 characters")
+    .max(600, "Your text must have less than 600 characters")
     .required("Your text is required")
 });
 
