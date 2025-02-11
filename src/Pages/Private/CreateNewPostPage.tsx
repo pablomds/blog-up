@@ -1,16 +1,37 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../Redux/Slices/userSlice';
 
+import { createPost } from '../../Controllers/postsControllers';
 import Input from '../../Components/Global/Input/Input';
 import { PostSchema, FormPostSchema } from '../../Schemas/PostSchema';
 
 const CreateNewPostPage = () => {
+  const currentUser = useSelector(selectUser);
 
-      const { register, handleSubmit,control, formState: { errors } } = useForm<FormPostSchema>({
-        resolver: yupResolver(PostSchema),
-        mode: "onSubmit"
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormPostSchema>({
+    resolver: yupResolver(PostSchema),
+    mode: "onSubmit",
+  });
+
+  const onSubmit = async (formValues: FormPostSchema) => {
+    try {
+      const newPostId = await createPost({
+        ...formValues,
+        createdBy: currentUser.id,
       });
+      console.log(newPostId);
+    } catch (error) {
+      console.log("Error On onSubmit()", error);
+    }
+  };
 
   return (
     <div className="h-full w-full flex flex-col items-start gap-y-7">
@@ -18,7 +39,10 @@ const CreateNewPostPage = () => {
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">Create new post</h1>
       </div>
-      <form className="flex flex-col gap-y-8 w-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-y-8 w-full max-w-[508px]"
+      >
         <Controller
           control={control}
           name={"title"}
@@ -31,6 +55,7 @@ const CreateNewPostPage = () => {
             />
           )}
         />
+        <span>{errors?.title && errors.title?.message}</span>
         <Controller
           control={control}
           name={"text"}
@@ -43,6 +68,7 @@ const CreateNewPostPage = () => {
             />
           )}
         />
+        <span>{errors?.text && errors.text?.message}</span>
         <button
           type="submit"
           className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
@@ -52,6 +78,6 @@ const CreateNewPostPage = () => {
       </form>
     </div>
   );
-}
+};
 
 export default CreateNewPostPage

@@ -1,3 +1,4 @@
 export enum COLLECTIONS {
-    USERS = "users"
+    USERS = "users",
+    POSTS = "posts"
 }
