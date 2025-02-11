@@ -2,13 +2,18 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../Redux/Slices/userSlice';
+import { useDispatch } from 'react-redux';
 
+import { addPost } from '../../Redux/Slices/postsSlice';
+import { selectUser } from '../../Redux/Slices/userSlice';
 import { createPost } from '../../Controllers/postsControllers';
 import Input from '../../Components/Global/Input/Input';
 import { PostSchema, FormPostSchema } from '../../Schemas/PostSchema';
+import { useToast } from '../../Context/ToastContext';
 
 const CreateNewPostPage = () => {
+  const dispatch = useDispatch();
+  const toast = useToast();
   const currentUser = useSelector(selectUser);
 
   const {
@@ -22,13 +27,14 @@ const CreateNewPostPage = () => {
   });
 
   const onSubmit = async (formValues: FormPostSchema) => {
+    const newPost = { ...formValues, createdBy: currentUser.id}
     try {
-      const newPostId = await createPost({
-        ...formValues,
-        createdBy: currentUser.id,
-      });
-      console.log(newPostId);
+      const newPostId = await createPost(newPost);
+      const newPostWithId = {...newPost, id: newPostId};
+      dispatch(addPost(newPostWithId))
+      toast?.open("Your post is online!", "success");
     } catch (error) {
+      toast?.open("An Error Occured Creating Your Post!", "failed");
       console.log("Error On onSubmit()", error);
     }
   };
