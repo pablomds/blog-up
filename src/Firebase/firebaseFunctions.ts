@@ -42,7 +42,7 @@ export const getAllDataFromCollectionWithWhereArray = async (collectionName: str
     return arrayData
 };
 
-export const getOneDataFromCollectionWithWhereArray = async (collectionName: string, whereArray: any, field: string) => {
+export const getDataFromCollectionWithWhereArray = async (collectionName: string, whereArray: any, field: string) => {
 
     let arrayData: any = []
     const q = query(collection(db,collectionName), where(whereArray.property, '==', whereArray.propertyValue))
@@ -50,7 +50,7 @@ export const getOneDataFromCollectionWithWhereArray = async (collectionName: str
     querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data[field] !== undefined) { // Vérifier si le champ existe
-            arrayData.push(data[field]); // Ajouter la valeur du champ spécifique
+            arrayData.push({...doc.data(), id: doc.id}); // Ajouter la valeur du champ spécifique
         }
     });
     
