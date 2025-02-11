@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router';
 
 import { LoginSchema, FormLogin } from '../../Schemas/LoginSchema';
 import { logInWithEmailAndPassword } from '../../Firebase/authentication';
-import { login } from '../../Redux/Slices/userSlice';
+import { setUser } from '../../Redux/Slices/userSlice';
+import { login } from '../../Redux/Slices/authSlice';
 
 import Input from '../../Components/Global/Input/Input';
 import Loader from '../../Components/Global/Loader/Loader';
@@ -37,7 +38,8 @@ const LoginPage = () => {
         if (response.status === "success")  {
           toast?.open("You're now logged in!", response.status);
           const user = await getUserByUid(response.user.uid);
-          dispatch(login(user));
+          dispatch(login(response.user));
+          dispatch(setUser(user));
           navigate("/create-new-post")
         } else {
           toast?.open("Email/Password incorrect!", response.status)
