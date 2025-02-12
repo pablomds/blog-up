@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
-
-import { getPosts } from '../../Controllers/postsControllers';
-import { useToast } from '../../Context/ToastContext';
 import { selectPosts } from '../../Redux/Slices/postsSlice';
 import BlogPost from '../../Components/Global/Lastest/BlogPost';
 import _ from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const LastestPage = () => {
 
-  const toast = useToast();
   const posts = useSelector(selectPosts);
 
   const DisplayPosts = () => _.chain(posts).orderBy('createdDate', 'desc').map((post, index) => <BlogPost post={post} key={index} />).value()
