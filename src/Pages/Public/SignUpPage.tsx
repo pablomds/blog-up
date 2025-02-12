@@ -9,7 +9,7 @@ import Input from '../../Components/Global/Input/Input';
 import { createUser } from '../../Controllers/usersControllers';
 import { signUpWithEmailAndPassword } from '../../Firebase/authentication';
 import { SignUpSchema, FormSignUpSchema } from '../../Schemas/SignUpSchema';
-import { useToast } from '../../Context/ToastContext';
+import CustomToast from '../../Components/Global/Toast/CustomToast';
 
 import backgroundSignUp from "../../Assets/Background/background-sign-up.jpg";
 
@@ -17,7 +17,6 @@ import backgroundSignUp from "../../Assets/Background/background-sign-up.jpg";
 const SignUpPage = () => {
 
     const navigate = useNavigate();
-    const toast = useToast();
     const [showPassword, setShowPassword] = useState(true);
     const [showConfirmPassword, setConfirmShowPassword] = useState(true);
 
@@ -36,10 +35,11 @@ const SignUpPage = () => {
       try {
         const uid = await signUpWithEmailAndPassword(email, password);
         if (uid) await createUser(email, name, uid);
-        toast?.open("You're Signed Up!", "success");
+        CustomToast({ variant: "success" , message: "You're Signed Up!"});
         navigate("/login")
       } catch (error) {
-        toast?.open("Sign Up failed!", "failed");
+        console.log("Error On onSubmit()", error);
+        CustomToast({ variant: "failed" , message: "Sign Up failed!"});
       }
     };
   return (
