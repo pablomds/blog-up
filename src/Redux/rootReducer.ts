@@ -27,5 +27,10 @@ const rootReducer = (state: any, action: any) => {
   })(state, action);
 };
 
+export const resetState = () => ({
+  type: RESET_ACTION,
+});
+
+
 // Persisted Root Reducer
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
