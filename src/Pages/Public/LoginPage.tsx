@@ -14,9 +14,14 @@ import { login } from '../../Redux/Slices/authSlice';
 import Input from '../../Components/Global/Input/Input';
 import Loader from '../../Components/Global/Loader/Loader';
 
-import backgroundLogin from "../../Assets/Background/background-login.jpg"
+import { getPosts } from '../../Controllers/postsControllers';
+import { getUserByPostId, getUserByUid } from '../../Controllers/usersControllers';
+
+import { setPosts } from '../../Redux/Slices/postsSlice';
 import { useToast } from '../../Context/ToastContext';
-import { getUserByUid } from '../../Controllers/usersControllers';
+
+import backgroundLogin from "../../Assets/Background/background-login.jpg"
+import _ from 'lodash';
 
 const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
@@ -38,9 +43,15 @@ const LoginPage = () => {
         if (response.status === "success")  {
           toast?.open("You're now logged in!", response.status);
           const user = await getUserByUid(response.user.uid);
+          const allPosts = await getPosts();
+          const posts = await Promise.all(_.map(allPosts, async post => {
+            const user = await getUserByPostId(post.id);
+            return {...post, createdByName: user[0].name}
+          }))
           dispatch(login(response.user));
           dispatch(setUser(user));
-          navigate("/create-new-post")
+          dispatch(setPosts(posts));
+          navigate("/lastest")
         } else {
           toast?.open("Email/Password incorrect!", response.status)
         }
