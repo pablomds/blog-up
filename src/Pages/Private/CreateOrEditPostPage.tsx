@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,16 +10,14 @@ import { addPost, selectPostWithId, updatePost as updatePostInRedux, deletePost 
 import { selectUser, setUser } from '../../Redux/Slices/userSlice';
 import { createPost, deletePost, updatePost } from '../../Controllers/postsControllers';
 import { PostSchema, FormPostSchema } from '../../Schemas/PostSchema';
-import { useToast } from '../../Context/ToastContext';
 import { updateUser } from '../../Controllers/usersControllers';
-import _ from 'lodash';
+import CustomToast from '../../Components/Global/Toast/CustomToast';
 
 const CreateOrEditPostPage = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = useToast();
   const currentUser = useSelector(selectUser);
 
   const selectedPost = useSelector((state) => selectPostWithId(state, id));
@@ -53,8 +52,8 @@ const CreateOrEditPostPage = () => {
         const updatedPost = {title: formValues.title, text: formValues.text}
         await updatePost(formValues.id, updatedPost);
         dispatch(updatePostInRedux({...updatedPost, id: formValues.id}));
-        toast?.open("Your post is updated!", "success");
-        navigate(`/post/${formValues.id}`)
+        CustomToast({ variant: "success", message: "Your post is updated!" })
+        navigate(`/lastest`)
       } else {
         const newPostId = await createPost(newPost);
         const newPostWithId = {
@@ -72,11 +71,11 @@ const CreateOrEditPostPage = () => {
             postsIds: [...currentUser.postsIds, newPostId],
           })
         );
-        toast?.open("Your post is online!", "success");
+        CustomToast({ variant: "success", message: "Your post is online!" });
         navigate(`/post/${newPostId}`)
       }
     } catch (error) {
-      toast?.open("An Error Occured Creating Your Post!", "failed");
+      CustomToast({ variant: "failed", message: "An Error Occured Creating Your Post!" });
       console.log("Error On onSubmit()", error);
     }
 
@@ -86,11 +85,11 @@ const CreateOrEditPostPage = () => {
     try {
       await deletePost(selectedPost.id)
       dispatch(deletePostInRedux({id: selectedPost.id}));
-      dispatch(setUser({...currentUser, postsIds: _.filter(currentUser.postsIds, (postId: any) => postId !== selectedPost.id) }))
-      toast?.open("Your Post Was Deleted!", "success");
+      dispatch(setUser({...currentUser, postsIds: _.filter(currentUser.postsIds, (postId: any) => postId !== selectedPost.id) }));
+      CustomToast({ variant: "success", message: "Your Post Was Deleted!"});
       navigate("/lastest");
     } catch (error) {
-      toast?.open("An Error Occured Deleting Your Post!", "failed");
+      CustomToast({ variant: "failed", message: "An Error Occured Deleting Your Post!"});
       console.log("Error On onDelete()", error);
     }
   };
