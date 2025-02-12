@@ -11,6 +11,7 @@ import SignUpPage from '../Pages/Public/SignUpPage'
 import LastestPage from '../Pages/Private/LastestPage';
 import BlogPostDetailsPage from '../Pages/Private/BlogPostDetailsPage';
 import CreateNewPost from '../Pages/Private/CreateNewPostPage';
+import NotFoundPage from '../Pages/Public/NotFoundPage';
 
 
 export const PublicRoutes = () => {
@@ -19,6 +20,7 @@ export const PublicRoutes = () => {
       <Route key="lading-page" path="/" element={<PublicLayout />} />
       <Route key="login-page" path="/login" element={<LoginPage />} />
       <Route key="signup-page" path="/sign-up" element={<SignUpPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
   ]
 };
