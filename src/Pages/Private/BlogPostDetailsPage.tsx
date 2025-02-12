@@ -1,6 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+
+import { selectPostWithId } from '../../Redux/Slices/postsSlice';
+import { getPost } from '../../Controllers/postsControllers';
+import _ from 'lodash';
+import { utils } from '../../Utils/utils';
+
+interface Post {
+  id: string;
+  createdDate: number;
+  title: string;
+  text: string;
+  createdBy: string;
+  createdByName: string;
+};
+
+const Content = ({ content } : { content: string} ) => {
+  const firstLetter = content.charAt(0);
+  return (
+    <p className="font-inria-sans text-base whitespace-pre-line">
+      <span className="text-4xl">{firstLetter}</span>
+      {
+        content.slice(1,content.length).replace(/#[^\s#]+/g, "")
+      }
+    </p>
+  );
+};
+
+const Hashtag = ({ hashtag } : { hashtag: string }) => {
+  return (
+    <div className="border-1 border-blog-up-green rounded-2xl px-2 py-0.5 xs:px-5 xs:py-1 truncate">
+      <span className="font-inria-sans text-xs xs:text-sm md:text-base  font-light text-blog-up-green">
+        {hashtag}
+      </span>
+    </div>
+  );
+};
+
+const Hashtags = ({hashtags} : { hashtags: any}) => _.map(hashtags, hashtag => <Hashtag hashtag={hashtag} />)
 
 const BlogPostDetailsPage = () => {
+
+  const [post, setPost] = useState<Post | null>(null)
+  const params = useParams();
+  const selectedPost = useSelector((state) => selectPostWithId(state, params.id));
+
+  useEffect(() => {
+    if (selectedPost) {
+      setPost(selectedPost);
+    }
+  }, [selectedPost]); // Re-run effect when `selectedPost` changes
+
+  if (!post) {
+    return <div className="text-5xl text-blog-up-red hover:text-blog-up-gray">This post doesn't exists :/</div>
+  }
+  const hashtags = post.text.match(/#[^\s#]+/g);
+
   return (
     <div className="flex flex-col gap-y-5 items-start pb-20">
       <div className="flex flex-col items-center">
@@ -9,58 +65,24 @@ const BlogPostDetailsPage = () => {
       </div>
       <div className="flex flex-col gap-y-3">
         <h1 className="font-inria-sans text-3xl text-blog-up-green">
-          15 Disadvantages Of Freedom And How You Can Workaround It.
+          {post.title}
         </h1>
         <span className="font-inria-sans text-base text-blog-up-gray font-light">
-          written by @username
+          written by {post.createdByName}
         </span>
       </div>
       <div className="flex flex-col gap-y-3">
-        <p className="font-inria-sans text-base">
-          {" "}
-          <span className="text-4xl">L</span>
-          orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Luctus venenatis
-          lectus magna fringilla urna. Aliquet porttitor lacus luctus accumsan
-          tortor posuere ac ut. Eleifend quam adipiscing vitae proin sagittis
-          nisl rhoncus. Faucibus ornare suspendisse sed nisi lacus sed viverra
-          tellus. Urna molestie at elementum eu facilisis sed odio morbi. Eget
-          mi proin sed libero enim. Quis varius quam quisque id diam vel quam.
-          Duis at tellus at urna condimentum mattis pellentesque. Nulla facilisi
-          cras fermentum odio eu feugiat pretium nibh. Ut tellus elementum
-          sagittis vitae et leo. Cursus in hac habitasse platea dictumst quisque
-          sagittis purus. Odio facilisis mauris sit amet. Quis vel eros donec ac
-          odio. Orci a scelerisque purus semper. Amet justo donec enim diam
-          vulputate ut pharetra. Arcu odio ut sem nulla pharetra diam sit amet
-          nisl. Sapien eget mi proin sed libero enim. Nunc sed blandit libero
-          volutpat sed cras ornare arcu dui. Neque viverra justo nec ultrices
-          dui sapien eget mi. Cras semper auctor neque vitae tempus quam
-          pellentesque nec nam. Vitae tortor condimentum lacinia quis vel eros
-          donec ac. Consectetur adipiscing elit pellentesque habitant morbi.
-          Enim tortor at auctor urna nunc id cursus metus. Elit sed vulputate mi
-          sit. Quis viverra nibh cras pulvinar mattis nunc sed. In aliquam sem
-          fringilla ut morbi tincidunt. Orci a scelerisque purus semper.
-          Dignissim sodales ut eu sem integer vitae justo.{" "}
-        </p>
+        <Content content={post.text} />
         <div className="flex flex-row justify-between">
-          <div className="md:hidden font-inria-sans text-base">27 May 2025</div>
-          <div className="font-inria-sans text-base">@userblabla</div>
+          <div className="md:hidden font-inria-sans text-base">{utils.formatDateToArray(post.createdDate).join(" ")}</div>
         </div>
       </div>
-      <div className="flex flex-row gap-x-2">
-        <div className="border-1 border-blog-up-green rounded-2xl px-5 py-1">
-          <span className="font-inria-sans font-light text-blog-up-green">
-            #thinkfree
-          </span>
-        </div>
-        <div className="border-1 border-blog-up-green rounded-2xl px-5 py-1">
-          <span className="font-inria-sans font-light text-blog-up-green">
-            #imagination
-          </span>
-        </div>
+      <div className="grid grid-flow-row grid-cols-3 gap-2">
+        <Hashtags hashtags={hashtags} />
       </div>
     </div>
   );
+
 }
 
 export default BlogPostDetailsPage
