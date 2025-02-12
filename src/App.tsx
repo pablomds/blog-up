@@ -11,8 +11,8 @@ function App() {
     <ToastProvider>
         <Router>
           <Routes>
-            {PublicRoutes()}
             {PrivateRoutes()}
+            {PublicRoutes()}
           </Routes>
         </Router>
     </ToastProvider>
