@@ -29,4 +29,7 @@ export const selectPosts = (state: any) => state.posts.posts
 export const selectUserPosts = (state: any, action: any) =>
   _.filter(state.posts, ["createdBy", action.payload.createdBy]);
 
+export const selectPostWithId = (state: any, id: string | undefined):any | null =>
+  _.find(state.posts.posts, ["id", id]);
+
 export default postsSlice.reducer;
