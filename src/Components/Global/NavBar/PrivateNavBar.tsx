@@ -8,7 +8,7 @@ const PrivateNavBar = () => {
     { label: "", link: "/my-profil" },
     { label: "Search", link: "/search" },
     { label: "Lastest", link: "/lastest" },
-    { label: "Create", link: "/create-new-post" },
+    { label: "Create", link: "/create-post" },
   ];
   return (
     <>

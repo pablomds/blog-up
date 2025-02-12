@@ -1,6 +1,5 @@
-import { addDocumentToCollection, getAllDataFromCollection, getDataFromCollection } from "../Firebase/firebaseFunctions";
+import { addDocumentToCollection, deleteDocumentFromCollection, getAllDataFromCollection, getDataFromCollection, updateDocumentToCollection } from "../Firebase/firebaseFunctions";
 import { COLLECTIONS } from "../Firebase/collections";
-import { FormPostSchema } from "../Schemas/PostSchema";
 
 export const createPost = async (data: any):Promise<string | void> => {
     try {
@@ -17,6 +16,22 @@ export const getPost = async (postId: string) => {
         return post
     } catch (error) {
         console.log("Error On getPost()", error)
+    }
+};
+
+export const deletePost = async (postId: string) => {
+    try {
+        await deleteDocumentFromCollection(COLLECTIONS.POSTS, postId);
+    } catch (error) {
+        console.log("Error On deletePost()", error)
+    }
+};
+
+export const updatePost = async (postId: string, dataToUpdate: any) => {
+    try {
+        await updateDocumentToCollection(COLLECTIONS.POSTS, postId, dataToUpdate)
+    } catch (error) {
+        console.log("Error On updatePost()", error)
     }
 }
 

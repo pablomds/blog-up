@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 import { selectPostWithId } from '../../Redux/Slices/postsSlice';
 import { getPost } from '../../Controllers/postsControllers';
 import _ from 'lodash';
 import { utils } from '../../Utils/utils';
+import { selectUser } from '../../Redux/Slices/userSlice';
 
 interface Post {
   id: string;
@@ -43,8 +44,9 @@ const Hashtags = ({hashtags} : { hashtags: any}) => _.map(hashtags, hashtag => <
 const BlogPostDetailsPage = () => {
 
   const [post, setPost] = useState<Post | null>(null)
-  const params = useParams();
-  const selectedPost = useSelector((state) => selectPostWithId(state, params.id));
+  const { id } = useParams();
+  const currentUser = useSelector(selectUser);
+  const selectedPost = useSelector((state) => selectPostWithId(state, id));
 
   useEffect(() => {
     if (selectedPost) {
@@ -74,12 +76,23 @@ const BlogPostDetailsPage = () => {
       <div className="flex flex-col gap-y-3">
         <Content content={post.text} />
         <div className="flex flex-row justify-between">
-          <div className="md:hidden font-inria-sans text-base">{utils.formatDateToArray(post.createdDate).join(" ")}</div>
+          <div className="md:hidden font-inria-sans text-base">
+            {utils.formatDateToArray(post.createdDate).join(" ")}
+          </div>
         </div>
       </div>
       <div className="grid grid-flow-row grid-cols-3 gap-2">
         <Hashtags hashtags={hashtags} />
       </div>
+      {currentUser.id === post.createdBy && (
+        <Link
+          to={`/create-post/${post.id}`}
+          type="submit"
+          className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
+        >
+          {"EDIT"}
+        </Link>
+      )}
     </div>
   );
 

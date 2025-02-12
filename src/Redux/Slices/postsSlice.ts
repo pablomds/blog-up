@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { utils } from "../../Utils/utils";
 
   const initialState: any = {
     posts: [], // Initialize posts as an empty array
@@ -16,13 +17,32 @@ export const postsSlice = createSlice({
     addPost: (state, action: PayloadAction<any>) => {
       state.posts.push(action.payload);
     },
+    updatePost: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+
+      const index = state.posts.findIndex(
+        (post: any) => post.id === action.payload.id
+      );
+
+      if (index !== -1) {
+        state.posts[index] = {
+          ...state.posts[index],
+          title: action.payload.title,
+          text: action.payload.text,
+          updatedDate: utils.getUnixTimeStamp(new Date()),
+        };
+      }
+    },
+    deletePost: (state, action: PayloadAction<any>) => {
+      state.posts = state.posts.filter((post: any) => post.id !== action.payload.id);
+    },
     logout: (state) => {
       state = initialState;
     },
   },
 });
 
-export const { setPosts, addPost, logout } = postsSlice.actions;
+export const { setPosts, addPost, logout,deletePost, updatePost } = postsSlice.actions;
 
 export const selectPosts = (state: any) => state.posts.posts
 
