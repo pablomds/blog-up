@@ -8,7 +8,7 @@ import emailjs from '@emailjs/browser';
 
 import Loader from "../../Components/Global/Loader/Loader";
 import backgroundContact from "../../Assets/Background/background-contact.jpg";
-import { useToast } from "../../Context/ToastContext";
+import CustomToast from "../../Components/Global/Toast/CustomToast";
 
 const contactSchema = yup.object({
   name: yup.string().max(40, "Your must have less than 40 characters").required("Your name is required"),
@@ -19,8 +19,6 @@ const contactSchema = yup.object({
 type ContactFormData = yup.InferType<typeof contactSchema>;
 
 const ContactPage = () => {
-
-  const toast = useToast();
 
   const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema),
@@ -40,9 +38,9 @@ const ContactPage = () => {
       await emailjs.send(import.meta.env.VITE_EMAIL_JS_SERVICE_ID, import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID, formValues , {
         publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
       })
-      toast?.open("Success your email was sent!", "success")
+      CustomToast({ variant: "success", message: "Success Your Email Was Sent!"});
     } catch (error) {
-      toast?.open("Internal error occured while sending your email!", "failed")
+      CustomToast({ variant: "failed", message: "An Error Occured Sending Your Email!"});
     }
   }
 
