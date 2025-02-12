@@ -13,7 +13,7 @@ interface Post {
   title: string;
   text: string;
   createdBy: string;
-  createdByName: string;
+  author: string;
 };
 
 const Content = ({ content } : { content: string} ) => {
@@ -68,7 +68,7 @@ const BlogPostDetailsPage = () => {
           {post.title}
         </h1>
         <span className="font-inria-sans text-base text-blog-up-gray font-light">
-          written by {post.createdByName}
+          written by {post.author}
         </span>
       </div>
       <div className="flex flex-col gap-y-3">

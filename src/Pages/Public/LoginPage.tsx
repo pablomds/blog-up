@@ -46,7 +46,7 @@ const LoginPage = () => {
           const allPosts = await getPosts();
           const posts = await Promise.all(_.map(allPosts, async post => {
             const user = await getUserByPostId(post.id);
-            return {...post, createdByName: user[0].name}
+            return {...post, author: user[0].name}
           }))
           dispatch(login(response.user));
           dispatch(setUser(user));

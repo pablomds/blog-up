@@ -31,7 +31,7 @@ const CreateNewPostPage = () => {
     const newPost = { ...formValues, createdBy: currentUser.id}
     try {
       const newPostId = await createPost(newPost);
-      const newPostWithId = {...newPost, id: newPostId, createdByName: currentUser.name};
+      const newPostWithId = {...newPost, id: newPostId, author: currentUser.name};
       await updateUser(currentUser.id, { postsIds: [...currentUser.postsIds, newPostId]} )
       dispatch(addPost(newPostWithId))
       dispatch(setUser({...currentUser, postsIds: [...currentUser.postsIds, newPostId]}))
