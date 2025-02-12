@@ -48,16 +48,14 @@ export const getDataFromCollectionWithWhereArray = async (collectionName: string
     const q = query(collection(db,collectionName), where(whereArray.property, '==', whereArray.propertyValue))
     const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
-        const data = doc.data();
+        const data = {...doc.data(), id: doc.id} as Record<string,any>;
         if (data[field] !== undefined) { // Vérifier si le champ existe
-            arrayData.push({...doc.data(), id: doc.id}); // Ajouter la valeur du champ spécifique
+            arrayData.push({...data}); // Ajouter la valeur du champ spécifique
         }
     });
-    
     if (arrayData.length === 1) {
         return arrayData[0];
     }
-
     return arrayData
 };
 
