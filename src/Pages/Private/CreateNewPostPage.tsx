@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { addPost } from '../../Redux/Slices/postsSlice';
-import { selectUser } from '../../Redux/Slices/userSlice';
+import { selectUser, setUser } from '../../Redux/Slices/userSlice';
 import { createPost } from '../../Controllers/postsControllers';
 import Input from '../../Components/Global/Input/Input';
 import { PostSchema, FormPostSchema } from '../../Schemas/PostSchema';
 import { useToast } from '../../Context/ToastContext';
+import { updateUser } from '../../Controllers/usersControllers';
 
 const CreateNewPostPage = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,10 @@ const CreateNewPostPage = () => {
     const newPost = { ...formValues, createdBy: currentUser.id}
     try {
       const newPostId = await createPost(newPost);
-      const newPostWithId = {...newPost, id: newPostId};
+      const newPostWithId = {...newPost, id: newPostId, createdByName: currentUser.name};
+      await updateUser(currentUser.id, { postsIds: [...currentUser.postsIds, newPostId]} )
       dispatch(addPost(newPostWithId))
+      dispatch(setUser({...currentUser, postsIds: [...currentUser.postsIds, newPostId]}))
       toast?.open("Your post is online!", "success");
     } catch (error) {
       toast?.open("An Error Occured Creating Your Post!", "failed");
