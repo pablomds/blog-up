@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MobilePrivateNavBar from './MobilePrivateNavBar';
 import DesktopPrivateSideBar from './DesktopPrivateSideBar';
 
@@ -9,6 +7,7 @@ const PrivateNavBar = () => {
     { label: "Search", link: "/search" },
     { label: "Lastest", link: "/lastest" },
     { label: "Create", link: "/create-post" },
+    { label: "Logout", link: "/logout" }
   ];
   return (
     <>
