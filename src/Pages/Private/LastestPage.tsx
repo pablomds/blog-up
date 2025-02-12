@@ -12,7 +12,7 @@ const LastestPage = () => {
   const toast = useToast();
   const posts = useSelector(selectPosts);
 
-  const DisplayPosts = () => _.map(posts, (post, index) => <BlogPost post={post} key={index} />)
+  const DisplayPosts = () => _.chain(posts).orderBy('createdDate', 'desc').map((post, index) => <BlogPost post={post} key={index} />).value()
 
   return (
     <div className="h-full w-full flex flex-col items-start gap-y-7">
