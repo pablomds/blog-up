@@ -18,7 +18,7 @@ import { getPosts } from '../../Controllers/postsControllers';
 import { getUserByPostId, getUserByUid } from '../../Controllers/usersControllers';
 
 import { setPosts } from '../../Redux/Slices/postsSlice';
-import { useToast } from '../../Context/ToastContext';
+import CustomToast from '../../Components/Global/Toast/CustomToast';
 
 import backgroundLogin from "../../Assets/Background/background-login.jpg"
 import _ from 'lodash';
@@ -27,7 +27,6 @@ const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
-  const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +40,6 @@ const LoginPage = () => {
       try {
         const response = await logInWithEmailAndPassword(email, password);
         if (response.status === "success")  {
-          toast?.open("You're now logged in!", response.status);
           const user = await getUserByUid(response.user.uid);
           const allPosts = await getPosts();
           const posts = await Promise.all(_.map(allPosts, async post => {
@@ -51,9 +49,10 @@ const LoginPage = () => {
           dispatch(login(response.user));
           dispatch(setUser(user));
           dispatch(setPosts(posts));
+          // CustomToast({ variant: "success", message: "You're now logged in!"});
           navigate("/lastest")
         } else {
-          toast?.open("Email/Password incorrect!", response.status)
+          CustomToast({ variant: "failed", message: "Email/Password incorrect!"});
         }
       } catch (error) {
         console.log("Error On Submit()", error)
