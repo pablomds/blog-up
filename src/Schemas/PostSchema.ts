@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 export const PostSchema = yup.object({
+  id: yup.string().notRequired().default(""),
   title: yup.string().max(60, "Your title must have less than 60 characters").required("Your title is required"),
   text: yup
     .string()
