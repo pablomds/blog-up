@@ -33,7 +33,7 @@ const ReadMoreText: React.FC<ReadMoreTextProps> = ({
         {text}
       </p>
       {isClamped && (
-        <Link to={readMoreLink} className="text-blog-up-green underline ml-1">
+        <Link to={readMoreLink} className="text-blog-up-green underline">
           read more
         </Link>
       )}
@@ -43,7 +43,7 @@ const ReadMoreText: React.FC<ReadMoreTextProps> = ({
 
 const Hashtag = ({ hashtag } : { hashtag: string}) => {
   return (
-    <div className="max-w-28 border-1 border-blog-up-green rounded-2xl px-2 py-0.5 xs:px-5 xs:py-1 truncate">
+    <div className="max-w-28 md:max-w-36 border-1 border-blog-up-green rounded-2xl px-2 py-0.5 xs:px-5 xs:py-1 truncate">
       <span className="font-inria-sans text-xs xs:text-sm md:text-base  font-light text-blog-up-green">
         {hashtag}
       </span>
