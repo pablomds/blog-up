@@ -3,8 +3,8 @@ import BlogPost from '../../Components/Global/Lastest/BlogPost';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
-const LastestPage = () => {
 
+const LastestPage = () => {
   const posts = useSelector(selectPosts);
 
   const DisplayPosts = () => _.chain(posts).orderBy('createdDate', 'desc').map((post, index) => <BlogPost post={post} key={index} />).value()
