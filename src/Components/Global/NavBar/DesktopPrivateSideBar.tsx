@@ -1,6 +1,9 @@
 import React from 'react';
-import { Search, CirclePlus, TrendingUp } from 'lucide-react';
+import { Search, CirclePlus, TrendingUp, LogOut } from 'lucide-react';
 import { Link } from 'react-router';
+
+import { resetState } from '../../../Redux/rootReducer';
+import { useDispatch } from 'react-redux';
 
 interface IDesktopPrivateSideBar {
   navLinks: any
@@ -8,9 +11,11 @@ interface IDesktopPrivateSideBar {
 
 const DesktopPrivateSideBar: React.FC<IDesktopPrivateSideBar> = ({ navLinks }) => {
 
+  const dispatch = useDispatch()
+
   const UserAvatar = ({ username } : { username: string}) => {
     return (
-        <div className="bg-blog-up-green h-12 w-12 rounded-full flex justify-center items-center">
+        <div className="bg-blog-up-green h-12 w-12 rounded-full flex justify-center items-center hover:bg-blog-up-gray">
             <span className="font-inria-sans text-4xl font-bold text-blog-up-black">{username.charAt(0).toUpperCase()}</span>
         </div>
     )
@@ -26,24 +31,40 @@ const DesktopPrivateSideBar: React.FC<IDesktopPrivateSideBar> = ({ navLinks }) =
           </Link>
           <Link to={navLinks[1].link}>
             <div className="flex flex-col items-center">
-              <Search className="h-10 w-10 text-blog-up-green" />
-              <span className="font-inria-sans text-base">{navLinks[1].label}</span>
+              <Search className="h-10 w-10 text-blog-up-green hover:text-blog-up-gray" />
+              <span className="font-inria-sans text-base">
+                {navLinks[1].label}
+              </span>
             </div>
           </Link>
           <Link to={navLinks[2].link}>
             <div className="flex flex-col items-center">
-              <TrendingUp className="h-10 w-10 text-blog-up-green" />
-              <span className="font-inria-sans text-base">{navLinks[2].label}</span>
+              <TrendingUp className="h-10 w-10 text-blog-up-green hover:text-blog-up-gray" />
+              <span className="font-inria-sans text-base">
+                {navLinks[2].label}
+              </span>
             </div>
           </Link>
         </div>
-        <div className="flex flex-col items-center">
-          <Link to={navLinks[3].link}>
-            <div className="flex flex-col items-center">
-              <CirclePlus className="h-10 w-10 text-blog-up-green" />
-              <span className="font-inria-sans text-base">{navLinks[3].label}</span>
+        <div className="flex flex-col gap-y-6">
+          <div className="flex flex-col items-center">
+            <Link to={navLinks[3].link}>
+              <div className="flex flex-col items-center">
+                <CirclePlus className="h-10 w-10 text-blog-up-green hover:text-blog-up-gray" />
+                <span className="font-inria-sans text-base">
+                  {navLinks[3].label}
+                </span>
+              </div>
+            </Link>
+          </div>
+          <div className="flex flex-col items-center">
+            <div onClick={() => dispatch(resetState())} className="flex flex-col items-center cursor-pointer">
+              <LogOut className="h-10 w-10 text-blog-up-green hover:text-blog-up-gray" />
+              <span className="font-inria-sans text-base">
+                {navLinks[4].label}
+              </span>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
