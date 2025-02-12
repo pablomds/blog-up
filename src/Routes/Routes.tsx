@@ -30,7 +30,7 @@ export const PrivateRoutes = () => {
   return (
     <Route element={<PrivateLayout currentUser={currentUser} />}>
       <Route key="lastest-page" path="/lastest" element={<LastestPage />} />
-      <Route key="post-details-page" path="/post" element={<BlogPostDetailsPage />} />
+      <Route key="post-details-page" path="/post/:id" element={<BlogPostDetailsPage />} />
       <Route key="create-new-post-page" path="/create-new-post" element={<CreateNewPost />} />
     </Route>
   );
