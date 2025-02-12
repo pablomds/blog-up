@@ -10,7 +10,7 @@ import LoginPage from '../Pages/Public/LoginPage'
 import SignUpPage from '../Pages/Public/SignUpPage'
 import LastestPage from '../Pages/Private/LastestPage';
 import BlogPostDetailsPage from '../Pages/Private/BlogPostDetailsPage';
-import CreateNewPost from '../Pages/Private/CreateNewPostPage';
+import CreateOrEditPostPage from '../Pages/Private/CreateOrEditPostPage';
 import NotFoundPage from '../Pages/Public/NotFoundPage';
 
 
@@ -33,7 +33,7 @@ export const PrivateRoutes = () => {
     <Route element={<PrivateLayout currentUser={currentUser} />}>
       <Route key="lastest-page" path="/lastest" element={<LastestPage />} />
       <Route key="post-details-page" path="/post/:id" element={<BlogPostDetailsPage />} />
-      <Route key="create-new-post-page" path="/create-new-post" element={<CreateNewPost />} />
+      <Route key="create-new-post-page" path="/create-post/:id?" element={<CreateOrEditPostPage />} />
     </Route>
   );
 };
