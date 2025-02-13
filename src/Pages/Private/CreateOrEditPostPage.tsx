@@ -22,6 +22,8 @@ const CreateOrEditPostPage = () => {
 
   const selectedPost = useSelector((state) => selectPostWithId(state, id));
 
+  const isOwner = (): boolean => currentUser.id === selectedPost.createdBy;
+
   const {
     handleSubmit,
     control,
@@ -32,16 +34,25 @@ const CreateOrEditPostPage = () => {
     mode: "onSubmit",
   });
 
-
   useEffect(() => {
     if (selectedPost) {
+      if (!isOwner()) {
+          navigate("/create-post")
+          return
+      }
       reset({
         id: selectedPost.id,
         title: selectedPost.title,
         text: selectedPost.text
       });
+    } else {
+      reset({
+        id: "",
+        title: "",
+        text: ""
+      })
     }
-  }, [selectedPost, reset]); 
+  }, [id,selectedPost, reset]); 
 
   const onSubmit = async (formValues: FormPostSchema) => {
 
@@ -140,7 +151,7 @@ const CreateOrEditPostPage = () => {
           >
             {"SAVE"}
           </button>
-          {selectedPost && selectedPost.createdBy === currentUser.id ? (
+          {selectedPost && isOwner() ? (
             <div
               onClick={() => onDelete()}
               className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-red hover:bg-blog-up-gray h-10 w-52 max-w-[150px] text-blog-up-white cursor-pointer flex justify-center items-center select-none"
