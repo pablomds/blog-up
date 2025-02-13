@@ -25,7 +25,7 @@ const ReadMoreText: React.FC<IReadMore> = ({
     <div>
       <p
         ref={textRef}
-        className={`font-inria-sans text-base line-clamp-${maxLines}`}
+        className={`font-inria-sans text-base line-clamp-3`}
       >
         {text}
       </p>
