@@ -1,5 +1,6 @@
 import { addDocumentToCollection, getAllDataFromCollectionWithWhereArrayContains, getDataFromCollectionWithWhereArray, updateDocumentToCollection } from "../Firebase/firebaseFunctions";
-import { COLLECTIONS } from "../Firebase/collections";
+
+import { COLLECTIONS } from "@/Firebase/collections";
 
 export const createUser = async (email: string, name: string, uid: string): Promise<string | void> => {
     try {

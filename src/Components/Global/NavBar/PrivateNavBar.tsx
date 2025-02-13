@@ -1,9 +1,11 @@
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/Redux/Slices/userSlice';
+
 import MobilePrivateNavBar from './MobilePrivateNavBar';
 import DesktopPrivateSideBar from './DesktopPrivateSideBar';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../../Redux/Slices/userSlice';
 
 const PrivateNavBar = () => {
+  //Check if its make sense to call user selector here
   const username = useSelector(selectUser)
   const navLinks: any[] = [
     { label: "", link: "/my-profil" },

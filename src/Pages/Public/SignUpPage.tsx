@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AtSign, User, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router';
 import { useNavigate } from "react-router";
+import { AtSign, User, Eye, EyeOff } from 'lucide-react';
 
-import Input from '../../Components/Global/Input/Input';
-import { createUser } from '../../Controllers/usersControllers';
-import { signUpWithEmailAndPassword } from '../../Firebase/authentication';
-import { SignUpSchema, FormSignUpSchema } from '../../Schemas/SignUpSchema';
-import CustomToast from '../../Components/Global/Toast/CustomToast';
+import { signUpWithEmailAndPassword } from '@/Firebase/authentication';
+import { createUser } from '@/Controllers/usersControllers';
+import { SignUpSchema, FormSignUpSchema } from '@/Schemas/SignUpSchema';
 
-import backgroundSignUp from "../../Assets/Background/background-sign-up.jpg";
+import Input from '@/Components/Global/Input/Input';
+import CustomToast from '@/Components/Global/Toast/CustomToast';
+import backgroundSignUp from "@/Assets/Background/background-sign-up.jpg";
 
 
 const SignUpPage = () => {
@@ -21,7 +21,6 @@ const SignUpPage = () => {
     const [showConfirmPassword, setConfirmShowPassword] = useState(true);
 
         const {
-          register,
           handleSubmit,
           control,
           formState: { errors },

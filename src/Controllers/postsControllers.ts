@@ -1,5 +1,6 @@
 import { addDocumentToCollection, deleteDocumentFromCollection, getAllDataFromCollection, getDataFromCollection, updateDocumentToCollection } from "../Firebase/firebaseFunctions";
-import { COLLECTIONS } from "../Firebase/collections";
+
+import { COLLECTIONS } from "@/Firebase/collections";
 
 export const createPost = async (data: any):Promise<string | void> => {
     try {

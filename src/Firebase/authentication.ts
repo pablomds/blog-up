@@ -1,5 +1,3 @@
-import { auth, db } from "./firebaseConfig";
-
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -8,17 +6,9 @@ import {
   sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
-
-import {
-  getFirestore,
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-} from "firebase/firestore";
-
 import { User } from "firebase/auth";
+
+import { auth, db } from "@/Firebase/firebaseConfig";
 
 const googleProvider = new GoogleAuthProvider();
 

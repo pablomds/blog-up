@@ -2,11 +2,10 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userReducer from "./Slices/userSlice";
-import authReducer from "./Slices/authSlice";
-import postsReducer from "./Slices/postsSlice"
+import userReducer from "@/Redux/Slices/userSlice";
+import authReducer from "@/Redux/Slices/authSlice";
+import postsReducer from "@/Redux/Slices/postsSlice"
 // Import other reducers if needed
-// import authReducer from './Slices/authSlice';
 
 const RESET_ACTION = 'RESET_ACTION';
 

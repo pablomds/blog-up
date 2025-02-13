@@ -1,8 +1,8 @@
-import NavBar from '../Components/Global/NavBar/NavBar';
+import LandingPage from '@/Pages/Public/LandingPage';
+import AboutPage from '@/Pages/Public/AboutPage';
+import ContactPage from '@/Pages/Public/ContactPage';
 
-import LandingPage from '../Pages/Public/LandingPage';
-import AboutPage from '../Pages/Public/AboutPage';
-import ContactPage from '../Pages/Public/ContactPage';
+import NavBar from '@/Components/Global/NavBar/NavBar';
 
 const PublicLayout = () => {
 

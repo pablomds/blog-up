@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { Trash2 } from 'lucide-react';
 
-import { addPost, selectPostWithId, updatePost as updatePostInRedux, deletePost as deletePostInRedux } from '../../Redux/Slices/postsSlice';
-import { selectUser, setUser } from '../../Redux/Slices/userSlice';
-import { createPost, deletePost, updatePost } from '../../Controllers/postsControllers';
-import { PostSchema, FormPostSchema } from '../../Schemas/PostSchema';
-import { updateUser } from '../../Controllers/usersControllers';
-import CustomToast from '../../Components/Global/Toast/CustomToast';
+import { addPost, selectPostWithId, updatePost as updatePostInRedux, deletePost as deletePostInRedux } from '@/Redux/Slices/postsSlice';
+import { selectUser, setUser } from '@/Redux/Slices/userSlice';
+import { createPost, deletePost, updatePost } from '@/Controllers/postsControllers';
+import { updateUser } from '@/Controllers/usersControllers';
+import { PostSchema, FormPostSchema } from '@/Schemas/PostSchema';
+
+import CustomToast from '@/Components/Global/Toast/CustomToast';
 
 const CreateOrEditPostPage = () => {
 

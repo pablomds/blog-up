@@ -1,5 +1,6 @@
-import lostImage from "../../Assets/NotFound/lost.jpg";
 import { Link } from "react-router";
+
+import lostImage from "@/Assets/NotFound/lost.jpg";
 
 const NotFoundPage = () => {
   return (

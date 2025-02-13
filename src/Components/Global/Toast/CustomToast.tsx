@@ -1,5 +1,5 @@
-import { CircleCheck, CircleX } from "lucide-react";
 import toast from "react-hot-toast";
+import { CircleCheck, CircleX } from "lucide-react";
 
 interface ICustomToast {
   variant: "success" | "failed";

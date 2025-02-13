@@ -1,7 +1,7 @@
 import { HashLink as Link } from 'react-router-hash-link';
 
-import FreeImaginationSvg from '../../Assets/Svg/Ilustration.svg'
-import Slide from '../../Components/Global/Slide/Slide';
+import Slide from '@/Components/Global/Slide/Slide';
+import FreeImaginationSvg from '@/Assets/Svg/Ilustration.svg'
 
 const LandingPage = () => {
   return (

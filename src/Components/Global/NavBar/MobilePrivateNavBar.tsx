@@ -1,8 +1,10 @@
 import { Link } from 'react-router';
-import { Search, CirclePlus, TrendingUp, LogOut } from 'lucide-react';
-import { resetState } from '../../../Redux/rootReducer';
 import { useDispatch } from 'react-redux';
-import UsernameLogo from './PrivateNavBar/UsernameLogo';
+import { Search, CirclePlus, TrendingUp, LogOut } from 'lucide-react';
+
+import { resetState } from '@/Redux/rootReducer';
+
+import UsernameLogo from '@/Components/Global/NavBar/PrivateNavBar/UsernameLogo';
 
 
 interface IDesktopPrivateSideBar {

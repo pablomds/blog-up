@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import _ from "lodash";
-import { utils } from "../../Utils/utils";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { utils } from "@/Utils/utils";
 
   const initialState: any = {
     posts: [], // Initialize posts as an empty array

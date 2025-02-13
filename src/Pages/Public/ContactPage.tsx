@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { motion } from "motion/react";
 import emailjs from '@emailjs/browser';
 
-import Loader from "../../Components/Global/Loader/Loader";
-import backgroundContact from "../../Assets/Background/background-contact.jpg";
-import CustomToast from "../../Components/Global/Toast/CustomToast";
+import Loader from "@/Components/Global/Loader/Loader";
+import CustomToast from "@/Components/Global/Toast/CustomToast";
+import backgroundContact from "@/Assets/Background/background-contact.jpg";
 
 const contactSchema = yup.object({
   name: yup.string().max(40, "Your must have less than 40 characters").required("Your name is required"),
   email: yup.string().required("Your email is required").email("Your email must be valid"),
   message: yup.string().required("Your message is required")
-})
+});
 
 type ContactFormData = yup.InferType<typeof contactSchema>;
 

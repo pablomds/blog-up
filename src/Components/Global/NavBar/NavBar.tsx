@@ -1,5 +1,5 @@
-import DesktopNavBar from "./DesktopNavBar"
-import MobileNavBar from "./MobileNavBar"
+import DesktopNavBar from "@/Components/Global/NavBar/DesktopNavBar"
+import MobileNavBar from "@/Components/Global/NavBar/MobileNavBar"
 
 const NavBar = () => {
   const navLinks = [

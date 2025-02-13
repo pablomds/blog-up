@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-import BlogPost from './BlogPost';
-import Pagination from '../Pagination/Pagination';
+import BlogPost from '@/Components/BlogPosts/BlogPost';
+import Pagination from '@/Components/Pagination/Pagination';
 
 interface IBlogPosts {
     blogPosts: any;

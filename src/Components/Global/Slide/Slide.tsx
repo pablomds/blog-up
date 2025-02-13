@@ -1,5 +1,5 @@
-import { motion, useAnimation , useInView } from 'motion/react';
 import { useRef, useEffect, ReactNode } from "react";
+import { motion, useAnimation , useInView } from 'motion/react';
 
 type props = {
   children: ReactNode;

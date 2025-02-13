@@ -1,18 +1,18 @@
 import { Route } from 'react-router';
 import { useSelector } from "react-redux";
 
-import { selectUser } from '../Redux/Slices/userSlice';
+import { selectUser } from '@/Redux/Slices/userSlice';
 
-import PublicLayout from '../Layouts/PublicLayout'
-import PrivateLayout from '../Layouts/PrivateLayout'
-import LoginPage from '../Pages/Public/LoginPage'
-import SignUpPage from '../Pages/Public/SignUpPage'
-import LastestPage from '../Pages/Private/LastestPage';
-import BlogPostDetailsPage from '../Pages/Private/BlogPostDetailsPage';
-import CreateOrEditPostPage from '../Pages/Private/CreateOrEditPostPage';
-import MyProfilPage from '../Pages/Private/MyProfilPage';
-import SearchPostPage from '../Pages/Private/SearchPostPage';
-import NotFoundPage from '../Pages/Public/NotFoundPage';
+import PublicLayout from '@/Layouts/PublicLayout'
+import PrivateLayout from '@/Layouts/PrivateLayout'
+import LoginPage from '@/Pages/Public/LoginPage'
+import SignUpPage from '@/Pages/Public/SignUpPage'
+import LastestPage from '@/Pages/Private/LastestPage';
+import BlogPostDetailsPage from '@/Pages/Private/BlogPostDetailsPage';
+import CreateOrEditPostPage from '@/Pages/Private/CreateOrEditPostPage';
+import MyProfilPage from '@/Pages/Private/MyProfilPage';
+import SearchPostPage from '@/Pages/Private/SearchPostPage';
+import NotFoundPage from '@/Pages/Public/NotFoundPage';
 
 
 export const PublicRoutes = () => {
