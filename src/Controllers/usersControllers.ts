@@ -3,7 +3,8 @@ import { COLLECTIONS } from "../Firebase/collections";
 
 export const createUser = async (email: string, name: string, uid: string): Promise<string | void> => {
     try {
-        const createdUserId = await addDocumentToCollection(COLLECTIONS.USERS, { email, name, uid, authProvider: "local" });
+        const user = { email, name, uid, postsIds: [], authProvider: "local" }
+        const createdUserId = await addDocumentToCollection(COLLECTIONS.USERS, user);
         return createdUserId
     } catch (error) {
         console.log('Error On createUser()', error)
