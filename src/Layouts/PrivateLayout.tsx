@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { Navigate, Outlet } from 'react-router';
-import PrivateNavBar from '../Components/Global/NavBar/PrivateNavBar';
+
+import PrivateNavBar from '@/Components/Global/NavBar/PrivateNavBar';
 
 interface IPrivateLayout {
     children?: ReactNode,

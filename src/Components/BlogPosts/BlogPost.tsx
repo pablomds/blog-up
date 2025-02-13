@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
-import BlogPostHashtag from "./BlogPostHashtag";
-import { utils } from '../../Utils/utils';
-import ReadMoreText from './ReadMore';
+import { utils } from '@/Utils/utils';
+
+import BlogPostHashtag from "@/Components/BlogPosts/BlogPostHashtag";
+import ReadMoreText from '@/Components/BlogPosts/ReadMore';
 
 const BlogPost = ({ post } : any) => {
 

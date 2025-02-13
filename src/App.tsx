@@ -1,8 +1,8 @@
 import { Routes, BrowserRouter as Router } from 'react-router';
-
-import { PublicRoutes, PrivateRoutes } from "./Routes/Routes";
 import { Toaster } from "react-hot-toast";
-import './App.css';
+
+import { PublicRoutes, PrivateRoutes } from "@/Routes/Routes";
+import '@/App.css';
 
 
 function App() {

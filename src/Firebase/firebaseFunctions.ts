@@ -1,10 +1,10 @@
 import _ from "lodash"
-import { collection, query, where } from "firebase/firestore"
-import { doc, getDoc, getDocs, updateDoc , addDoc, deleteDoc } from "firebase/firestore"
-import { getStorage, ref, listAll, uploadBytesResumable, getDownloadURL, deleteObject  } from "firebase/storage"
-import { utils } from "../Utils/utils"
+import { collection, query, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc , addDoc, deleteDoc } from "firebase/firestore";
+import { getStorage, ref, listAll, uploadBytesResumable, getDownloadURL, deleteObject  } from "firebase/storage";
 
-import { db, storage } from "./firebaseConfig"
+import { db, storage } from "@/Firebase/firebaseConfig";
+import { utils } from "@/Utils/utils";
 
 export const getDataFromCollection = async (collectionName: string, dataId: string) => {
     const docRef = doc(db, collectionName, dataId);
