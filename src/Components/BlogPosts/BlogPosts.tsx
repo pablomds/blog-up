@@ -7,10 +7,14 @@ interface IBlogPosts {
 }
 
 const BlogPosts: React.FC<IBlogPosts> = ({ blogPosts }) => {
-  return _.chain(blogPosts)
-    .orderBy("createdDate", "desc")
-    .map((post, index) => <BlogPost post={post} key={index} />)
-    .value();
+  return (
+    <div className="flex flex-col gap-y-7">
+      {_.chain(blogPosts)
+        .orderBy("createdDate", "desc")
+        .map((post, index) => <BlogPost post={post} key={index} />)
+        .value()}
+    </div>
+  );
 };
 
 export default BlogPosts
