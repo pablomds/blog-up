@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router';
-
-import { selectPostWithId } from '../../Redux/Slices/postsSlice';
-import { getPost } from '../../Controllers/postsControllers';
 import _ from 'lodash';
-import { utils } from '../../Utils/utils';
-import { selectUser } from '../../Redux/Slices/userSlice';
+
+import { selectPostWithId } from '@/Redux/Slices/postsSlice';
+import { utils } from '@/Utils/utils';
+import { selectUser } from '@/Redux/Slices/userSlice';
 
 interface Post {
   id: string;
