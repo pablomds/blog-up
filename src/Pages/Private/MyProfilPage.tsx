@@ -1,9 +1,10 @@
-import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
-import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 import { selectUserPosts } from '@/Redux/Slices/postsSlice';
 import { selectUser } from '@/Redux/Slices/userSlice';
+
+import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 
 const MyProfilPage = () => {
   const currentUser = useSelector(selectUser);

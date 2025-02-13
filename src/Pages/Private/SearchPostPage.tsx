@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { X, Search } from 'lucide-react';
 
-import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 import { selectPosts } from '@/Redux/Slices/postsSlice';
+
+import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 
 const SearchPostPage = () => {
   const [postTitle, setPostTitle] = useState<string>("");

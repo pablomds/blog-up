@@ -4,8 +4,8 @@ import { Link, useParams } from 'react-router';
 import _ from 'lodash';
 
 import { selectPostWithId } from '@/Redux/Slices/postsSlice';
-import { utils } from '@/Utils/utils';
 import { selectUser } from '@/Redux/Slices/userSlice';
+import { utils } from '@/Utils/utils';
 
 interface Post {
   id: string;

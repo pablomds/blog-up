@@ -1,27 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AtSign, Eye, EyeOff } from 'lucide-react';
 import { useDispatch } from "react-redux";
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router';
-
-import { LoginSchema, FormLogin } from '../../Schemas/LoginSchema';
-import { logInWithEmailAndPassword } from '../../Firebase/authentication';
-import { setUser } from '../../Redux/Slices/userSlice';
-import { login } from '../../Redux/Slices/authSlice';
-
-import Input from '../../Components/Global/Input/Input';
-import Loader from '../../Components/Global/Loader/Loader';
-
-import { getPosts } from '../../Controllers/postsControllers';
-import { getUserByPostId, getUserByUid } from '../../Controllers/usersControllers';
-
-import { setPosts } from '../../Redux/Slices/postsSlice';
-import CustomToast from '../../Components/Global/Toast/CustomToast';
-
-import backgroundLogin from "../../Assets/Background/background-login.jpg"
 import _ from 'lodash';
+import { AtSign, Eye, EyeOff } from 'lucide-react';
+
+import { logInWithEmailAndPassword } from '@/Firebase/authentication';
+import { getUserByPostId, getUserByUid } from '@/Controllers/usersControllers';
+import { getPosts } from '@/Controllers/postsControllers';
+import { setUser } from '@/Redux/Slices/userSlice';
+import { setPosts } from '@/Redux/Slices/postsSlice';
+import { login } from '@/Redux/Slices/authSlice';
+import { LoginSchema, FormLogin } from '@/Schemas/LoginSchema';
+
+import Input from '@/Components/Global/Input/Input';
+import Loader from '@/Components/Global/Loader/Loader';
+import CustomToast from '@/Components/Global/Toast/CustomToast';
+import backgroundLogin from "@/Assets/Background/background-login.jpg"
 
 const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);

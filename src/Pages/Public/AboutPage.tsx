@@ -1,7 +1,8 @@
 import { useRef, ReactNode } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate } from "motion/react";
-import MobileBackgroundImage from "../../Assets/Background/background-about-page-mobile.jpg";
-import DesktopBackgroundImage from "../../Assets/Background/desktop-background.jpg";
+
+import MobileBackgroundImage from "@/Assets/Background/background-about-page-mobile.jpg";
+import DesktopBackgroundImage from "@/Assets/Background/desktop-background.jpg";
 
 const AboutPage = () => {
 

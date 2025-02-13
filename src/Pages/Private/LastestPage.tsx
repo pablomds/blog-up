@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
-import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 import { selectPosts } from '@/Redux/Slices/postsSlice';
+
+import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 
 const LastestPage = () => {
   const blogPosts = useSelector(selectPosts);
