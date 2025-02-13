@@ -26,7 +26,7 @@ const BlogPost = ({ post } : any) => {
               {post.title}
             </span>
             <div className="flex flex-col gap-y-3">
-              <ReadMoreText text={post.text} readMoreLink={`/post/${post.id}`}/>
+              <ReadMoreText text={post.text} maxLines={2} readMoreLink={`/post/${post.id}`}/>
               <div className="flex flex-row justify-between">
                 <div className="md:hidden font-inria-sans text-base">{postDateToArray.join(" ")}</div>
                 <div className="font-inria-sans text-base text-blog-up-gray">by {post.author}</div>
