@@ -13,11 +13,9 @@ const LastestPage = () => {
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">Lastest</h1>
       </div>
-      <div className="flex flex-col gap-y-7">
-        <BlogPosts blogPosts={blogPosts} />
-      </div>
+      <BlogPosts blogPosts={blogPosts} />
     </div>
   );
-}
+};
 
 export default LastestPage
