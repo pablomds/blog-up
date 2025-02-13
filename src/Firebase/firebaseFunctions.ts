@@ -115,6 +115,7 @@ export const updateDocumentToCollection = async (collectionName: string, dataToU
 
     try {
         let docToUpdate = _.omitBy(dataToUpdate, _.overSome([_.isNil, _.isNaN]));
+        docToUpdate = _.omit(docToUpdate, ['id']);
         docToUpdate.updatedDate = utils.getUnixTimeStamp(new Date());
         const docRefToUpdate = doc(db, collectionName, dataToUpdateId);
         await updateDoc(docRefToUpdate, docToUpdate);   
