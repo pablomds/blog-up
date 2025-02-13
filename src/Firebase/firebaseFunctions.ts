@@ -113,10 +113,14 @@ export const addDocumentToCollection = async (collectionName: string, dataToColl
 
 export const updateDocumentToCollection = async (collectionName: string, dataToUpdateId: string, dataToUpdate: any): Promise<void> => {
 
-    let docToUpdate = _.omitBy(dataToUpdate, _.overSome([_.isNil, _.isNaN]));
-    docToUpdate.updatedDate = utils.getUnixTimeStamp(new Date());
-    const docRefToUpdate = doc(db, collectionName, dataToUpdateId);
-    await updateDoc(docRefToUpdate, docToUpdate);
+    try {
+        let docToUpdate = _.omitBy(dataToUpdate, _.overSome([_.isNil, _.isNaN]));
+        docToUpdate.updatedDate = utils.getUnixTimeStamp(new Date());
+        const docRefToUpdate = doc(db, collectionName, dataToUpdateId);
+        await updateDoc(docRefToUpdate, docToUpdate);   
+    } catch (error) {
+        console.log("Error On updateDocumentToCollection()", error)
+    }
 
 };
 
