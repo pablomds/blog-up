@@ -8,23 +8,22 @@ import _ from 'lodash';
 import { AtSign, Eye, EyeOff } from 'lucide-react';
 
 import { logInWithEmailAndPassword } from '@/Firebase/authentication';
-import { getUserByPostId, getUserByUid } from '@/Controllers/usersControllers';
-import { getPosts } from '@/Controllers/postsControllers';
+import { getUserByUid } from '@/Controllers/usersControllers';
 import { setUser } from '@/Redux/Slices/userSlice';
-import { setPosts } from '@/Redux/Slices/postsSlice';
+import { fetchPaginatedPosts, fetchTotalPosts } from '@/Redux/Slices/postsSlice';
 import { login } from '@/Redux/Slices/authSlice';
 import { LoginSchema, FormLogin } from '@/Schemas/LoginSchema';
 
 import Input from '@/Components/Global/Input/Input';
-import Loader from '@/Components/Global/Loader/Loader';
 import CustomToast from '@/Components/Global/Toast/CustomToast';
 import backgroundLogin from "@/Assets/Background/background-login.jpg"
+import { AppDispatch } from '@/Redux/configureStore';
 
 const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
     const { register, handleSubmit,control, formState: { errors } } = useForm<FormLogin>({
@@ -38,15 +37,11 @@ const LoginPage = () => {
         const response = await logInWithEmailAndPassword(email, password);
         if (response.status === "success")  {
           const user = await getUserByUid(response.user.uid);
-          const allPosts = await getPosts();
-          const posts = await Promise.all(_.map(allPosts, async post => {
-            const user = await getUserByPostId(post.id);
-            return {...post, author: user[0].name}
-          }))
           dispatch(login(response.user));
           dispatch(setUser(user));
-          dispatch(setPosts(posts));
-          // CustomToast({ variant: "success", message: "You're now logged in!"});
+          dispatch(fetchTotalPosts());
+          dispatch(fetchPaginatedPosts({ page: 0, limit: 100, lastDoc: null }));
+          CustomToast({ variant: "success", message: "You're now logged in!"});
           navigate("/lastest")
         } else {
           CustomToast({ variant: "failed", message: "Email/Password incorrect!"});
