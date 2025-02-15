@@ -1,12 +1,70 @@
 import _ from "lodash";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice,createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
+import { getTotalPosts, getPaginatedPosts, getPostsWithIds } from "@/Controllers/postsControllers";
 import { utils } from "@/Utils/utils";
+import { RootState } from "@/Redux/configureStore";
+import { getUserByPostId } from "@/Controllers/usersControllers";
+
+
+interface FetchPaginatedPostsArgs {
+  page: number;
+  limit: number;
+  lastDoc: any | null;
+}
+
+interface IFetchUserPostsWithIds {
+  author: string;
+  postsIds: string[]
+}
 
   const initialState: any = {
-    posts: [], // Initialize posts as an empty array
-    filteredPosts: [], // Initialize posts as an empty array
+    userPosts: [],
+    posts: [],
+    totalPosts: 0,
+    lastDoc: null,
+    currentPage: 0,
+    page:0
   };
+
+export const fetchTotalPosts = createAsyncThunk("posts/fetchTotalPosts", async () => {
+  const total = await getTotalPosts();
+  return total;
+});
+
+export const fetchPaginatedPosts = createAsyncThunk(
+  "posts/fetchPaginatedPosts",
+  async ({ page, limit, lastDoc }: FetchPaginatedPostsArgs) => {
+    const paginatedPosts = await getPaginatedPosts(limit, "createdDate", "desc", lastDoc);
+    const posts = await Promise.all(
+      _.map(paginatedPosts?.allDataFromCollection, async (post) => {
+        const user = await getUserByPostId(post.id);
+        return { ...post, author: user[0].name };
+      })
+    );
+    return { 
+      newPosts: [...posts], 
+      lastDoc: paginatedPosts?.lastDocument, 
+      page,
+    };
+  }
+);
+
+export const fetchUserPostsWithIds = createAsyncThunk(
+  "posts/fetchPostsWithIds",
+  async ({ author, postsIds }: IFetchUserPostsWithIds) => {
+    const postsWithIds = await getPostsWithIds(postsIds);
+    const posts = _.map(postsWithIds, post => {
+      post.author = author
+      return post
+    });
+    console.log(posts)
+    return { 
+      posts
+    };
+  }
+);
+
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -14,6 +72,16 @@ export const postsSlice = createSlice({
   reducers: {
     setPosts: (state, action) => {
       state.posts = action.payload;
+    },
+    setPostsAndTotal: (state, action) => {
+      state.posts = action.payload.posts;
+      state.totalPosts = action.payload.totalPosts;
+      state.lastDoc = action.payload.lastDoc;
+      state.page = action.payload.page;
+      state.currentPage = action.payload.currentPage; // ✅ Store the current page
+    },
+    setUserPosts: (state, action:PayloadAction<any>) => {
+      state.userPosts = _.filter(state.posts, ["createdBy", action.payload.userId])
     },
     addPost: (state, action: PayloadAction<any>) => {
       state.posts.push(action.payload);
@@ -40,17 +108,62 @@ export const postsSlice = createSlice({
     logout: (state) => {
       state = initialState;
     },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload; // ✅ Update current page in state
+    },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserPostsWithIds.fulfilled, (state, action) => {
+        if (!Array.isArray(state.posts)) {
+          state.userPosts = []; 
+        };
+        console.log(action.payload)
+        state.userPosts = [...state.userPosts , ...action.payload.posts];
+      })
+      .addCase(fetchTotalPosts.fulfilled, (state, action) => {
+        state.totalPosts = action.payload;
+      })
+      .addCase(fetchPaginatedPosts.fulfilled, (state, action) => {
+        if (!Array.isArray(state.posts)) {
+          state.posts = [];
+        };
+
+        state.posts = state.posts.concat(
+          action.payload.newPosts.map((post: any) => ({
+            ...post, 
+            page: action.payload.page,
+          }))
+        );
+        state.lastDoc = action.payload.lastDoc;
+        state.currentPage = action.payload.page;
+      })
+      .addCase(fetchPaginatedPosts.rejected, (state, action) => {
+        console.error("Failed to fetch posts", action.error);
+      });
+  },
+  
 });
 
-export const { setPosts, addPost, logout,deletePost, updatePost } = postsSlice.actions;
+export const { setPosts, addPost, logout,setUserPosts, deletePost, updatePost } = postsSlice.actions;
 
 export const selectPosts = (state: any) => state.posts.posts
 
-export const selectUserPosts = (state: any, id: any) => {
-  return _.filter(state.posts.posts, ["createdBy", id]);
-}
-  
+export const selectUserPosts = (state: any) => {
+  return state.posts.userPosts;
+};
+
+export const { setPostsAndTotal, setCurrentPage } = postsSlice.actions;
+
+export const selectPostsAndTotal = (state: any) => {
+  return {
+    posts: state.posts.posts || [],
+    totalPosts: state.posts.totalPosts,
+    lastDoc: state.posts.lastDoc,
+    currentPage: state.posts.currentPage,
+    page: state.posts.page
+  };
+};
 
 export const selectPostWithId = (state: any, id: string | undefined):any | null =>
   _.find(state.posts.posts, ["id", id]);

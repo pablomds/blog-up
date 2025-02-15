@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { collection, query, where } from "firebase/firestore";
+import { collection, getCountFromServer, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { doc, getDoc, getDocs, updateDoc , addDoc, deleteDoc } from "firebase/firestore";
 import { getStorage, ref, listAll, uploadBytesResumable, getDownloadURL, deleteObject  } from "firebase/storage";
 
@@ -16,11 +16,11 @@ export const getAllDataFromCollectionWithIds = async (collectionName: string, li
 
     let listOfData: any = []
 
-    await Promise.all([
-        listOfIds.forEach(async (id) => {
+    await Promise.all(
+        listOfIds.map(async (id) => {
             const data = await getDataFromCollection(collectionName, id)
             listOfData.push(data)
-        })]
+        })
     )
 
     return listOfData
@@ -94,6 +94,44 @@ export const getAllDataFromCollectionEvenDisable = async (collectionName: string
     });
 
     return allDataFromCollection
+};
+
+export const getPaginatedDataFromCollection = async (collectionName: string, limitNumber: number = 100, orderedBy: string = "createdDate", order: "asc" | "desc" = "desc", lastDoc = null) => {
+    
+    let allDataFromCollection: any = []
+
+    let q;
+    if (lastDoc) {
+        q = query(
+          collection(db, collectionName),
+          orderBy(orderedBy, order),
+          startAfter(lastDoc),
+          limit(limitNumber)
+        );
+      } else {
+        q = query(
+          collection(db, collectionName),
+          orderBy(orderedBy, order),
+          limit(limitNumber)
+        );
+      }
+
+    let querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+        allDataFromCollection.push({ ...doc.data(), id: doc.id })
+    });
+
+    // Get last document for pagination ps: check if I can make this request with last document with allDataFromCollection
+    const lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return {allDataFromCollection, lastDocument};
+};
+
+export const getTotalDataInCollection = async (collectionName: string) => {
+    const collRef = collection(db, collectionName);
+    const snapshot = await getCountFromServer(collRef);
+    return snapshot.data().count;
 };
 
 export const addDocumentToCollection = async (collectionName: string, dataToCollection: any): Promise<string | void> => {
