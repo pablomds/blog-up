@@ -1,36 +1,29 @@
-import { useState, useEffect, ElementType } from 'react';
+import { useState, useEffect, ElementType, ReactNode } from 'react';
 import ReactPaginate from 'react-paginate';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-const Components = ({ currentComponents }: { currentComponents: ElementType[] }) => {
+const Components = ({ currentComponents }: { currentComponents: ReactNode[] }) => {
   return <>{currentComponents}</>;
 };
 
-const Pagination = ({ itemsPerPage, items }: { itemsPerPage: number; items: any }) => {
-  const getStoredPage = () => {
-    const savedPage = localStorage.getItem('currentPage');
-    return savedPage ? Math.max(0, parseInt(savedPage, 10)) : 0;
-  };
+interface IPagination {
+  currentPage: number;
+  itemsPerPage: number;
+  items: ReactNode[];
+  totalItems: number;
+  onPageChange: (page: number) => void;
+}
 
-  const [currentPage, setCurrentPage] = useState<number>(getStoredPage());
-
-  useEffect(() => {
-    localStorage.setItem('currentPage', currentPage.toString());
-  }, [currentPage]);
+const Pagination: React.FC<IPagination> = ({ currentPage, itemsPerPage, totalItems, items, onPageChange }) => {
 
   const itemOffset = currentPage * itemsPerPage;
   const endOffset = itemOffset + itemsPerPage;
   const currentComponents = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
 
-  useEffect(() => {
-    if (currentPage >= pageCount) {
-      setCurrentPage(0);
-    }
-  }, [items, pageCount, currentPage]);
+  const pageCount = Math.ceil(totalItems / itemsPerPage);
 
-  const handlePageClick = (event: any) => {
-    setCurrentPage(event.selected);
+  const handlePageClick = (event: { selected: number }) => {
+    onPageChange(event.selected); 
   };
 
   return (
