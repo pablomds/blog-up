@@ -1,4 +1,4 @@
-import { useState, useEffect, ElementType, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import ReactPaginate from 'react-paginate';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
