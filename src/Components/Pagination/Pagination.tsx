@@ -29,22 +29,28 @@ const Pagination: React.FC<IPagination> = ({ currentPage, itemsPerPage, totalIte
   return (
     <>
       <Components currentComponents={currentComponents} />
-      <ReactPaginate
-        className="flex flex-row gap-x-4 items-center justify-center"
-        pageClassName="font-inria-sans"
-        pageLinkClassName="w-10 h-10 rounded-full flex justify-center items-center cursor-pointer select-none"
-        activeLinkClassName="w-10 h-10 rounded-full bg-blog-up-green bg-blog-up-gray text-blog-up-black hover:text-blog-up-black"
-        previousClassName="cursor-pointer"
-        nextLinkClassName="cursor-pointer"
-        breakLabel={"..."}
-        previousLabel={<ArrowLeft className="h-6 w-6 hover:text-blog-up-green" />}
-        nextLabel={<ArrowRight className="h-6 w-6 hover:text-blog-up-green" />}
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={2}
-        pageCount={pageCount}
-        forcePage={currentPage} 
-        renderOnZeroPageCount={null}
-      />
+      {pageCount > 1 && (
+        <ReactPaginate
+          className="flex flex-row gap-x-4 items-center justify-center"
+          pageClassName="font-inria-sans"
+          pageLinkClassName="w-10 h-10 rounded-full flex justify-center items-center cursor-pointer select-none"
+          activeLinkClassName="w-10 h-10 rounded-full bg-blog-up-green bg-blog-up-gray text-blog-up-black hover:text-blog-up-black"
+          previousClassName="cursor-pointer"
+          nextLinkClassName="cursor-pointer"
+          breakLabel={"..."}
+          previousLabel={
+            <ArrowLeft className="h-6 w-6 hover:text-blog-up-green" />
+          }
+          nextLabel={
+            <ArrowRight className="h-6 w-6 hover:text-blog-up-green" />
+          }
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          pageCount={pageCount}
+          forcePage={currentPage}
+          renderOnZeroPageCount={null}
+        />
+      )}
     </>
   );
 };
