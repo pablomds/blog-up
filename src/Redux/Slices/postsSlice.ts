@@ -3,7 +3,6 @@ import { createSlice,createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { getTotalPosts, getPaginatedPosts, getPostsWithIds } from "@/Controllers/postsControllers";
 import { utils } from "@/Utils/utils";
-import { RootState } from "@/Redux/configureStore";
 import { getUserByPostId } from "@/Controllers/usersControllers";
 
 
@@ -54,6 +53,7 @@ export const fetchUserPostsWithIds = createAsyncThunk(
   "posts/fetchPostsWithIds",
   async ({ author, postsIds }: IFetchUserPostsWithIds) => {
     const postsWithIds = await getPostsWithIds(postsIds);
+    
     const posts = _.map(postsWithIds, post => {
       post.author = author
       return post
@@ -118,7 +118,6 @@ export const postsSlice = createSlice({
         if (!Array.isArray(state.posts)) {
           state.userPosts = []; 
         };
-        console.log(action.payload)
         state.userPosts = [...state.userPosts , ...action.payload.posts];
       })
       .addCase(fetchTotalPosts.fulfilled, (state, action) => {
