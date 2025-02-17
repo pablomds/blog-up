@@ -21,9 +21,9 @@ export class utils {
     new Date(unixTimeStamp);
 
   static formatDateToArray = (unixTimeStamp: number) => {
-    const currentDate = this.formatUnixTimeStampToDate(unixTimeStamp)
+    const currentDate = this.formatUnixTimeStampToDate(unixTimeStamp);
     return [
-        currentDate.getDay(), this.monthNames[currentDate.getMonth()], currentDate.getFullYear()
+        currentDate.getDate(), this.monthNames[currentDate.getMonth()], currentDate.getFullYear()
     ]
   }
 }
