@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { createSlice,createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { getTotalPosts, getPaginatedPosts, getPostsWithIds } from "@/Controllers/postsControllers";
+import { getTotalPosts, getPaginatedPosts, getPostsWithIds, deletePost } from "@/Controllers/postsControllers";
 import { utils } from "@/Utils/utils";
 import { getUserByPostId } from "@/Controllers/usersControllers";
 
@@ -17,13 +17,17 @@ interface IFetchUserPostsWithIds {
   postsIds: string[]
 }
 
+interface IFetchDeletePost {
+  postId: string;
+}
+
   const initialState: any = {
     userPosts: [],
     posts: [],
     totalPosts: 0,
     lastDoc: null,
     currentPage: 0,
-    page:0,
+    page: 0,
     isLoading: false,
   };
 
@@ -65,6 +69,16 @@ export const fetchUserPostsWithIds = createAsyncThunk(
   }
 );
 
+export const fetchDeletePost = createAsyncThunk(
+  "posts/fetchfetchDeletePost",
+  async ({ postId }: IFetchDeletePost) => {
+    await deletePost(postId);
+    return {
+      postId
+    }
+  }
+);
+
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -102,9 +116,6 @@ export const postsSlice = createSlice({
         };
       }
     },
-    deletePost: (state, action: PayloadAction<any>) => {
-      state.posts = state.posts.filter((post: any) => post.id !== action.payload.id);
-    },
     logout: (state) => {
       state = initialState;
     },
@@ -134,7 +145,6 @@ export const postsSlice = createSlice({
         if (!Array.isArray(state.posts)) {
           state.posts = [];
         };
-
         state.posts = state.posts.concat(
           action.payload.newPosts.map((post: any) => ({
             ...post,
@@ -144,6 +154,13 @@ export const postsSlice = createSlice({
         state.lastDoc = action.payload.lastDoc;
         state.currentPage = action.payload.page;
         state.isLoading = false;
+      })
+      .addCase(fetchDeletePost.fulfilled, (state, action) => {
+        if (!Array.isArray(state.posts)) {
+          state.posts = [];
+        };
+        state.posts = state.posts.filter((post: any) => post.id !== action.payload.postId);
+        state.totalPosts = state.totalPosts-1;
       })
       .addCase(fetchUserPostsWithIds.rejected, (state, action) => {
         console.error("Failed to fetch user posts with ids", action.error);
@@ -161,7 +178,7 @@ export const postsSlice = createSlice({
   
 });
 
-export const { setPosts, addPost, logout,setUserPosts, deletePost, updatePost } = postsSlice.actions;
+export const { setPosts, addPost, logout, setUserPosts, updatePost } = postsSlice.actions;
 
 export const selectPosts = (state: any) => state.posts.posts
 
