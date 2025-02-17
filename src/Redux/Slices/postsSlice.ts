@@ -101,8 +101,6 @@ export const postsSlice = createSlice({
       state.posts.push(action.payload);
     },
     updatePost: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
-
       const index = state.posts.findIndex(
         (post: any) => post.id === action.payload.id
       );
@@ -115,6 +113,12 @@ export const postsSlice = createSlice({
           updatedDate: utils.getUnixTimeStamp(new Date()),
         };
       }
+    },
+    updateAuthorPosts: (state, action: PayloadAction<any>) => {
+      state.posts = state.posts.map((post: any) => {
+        if (post.createdBy === action.payload.userId) post.author = action.payload.name
+        return post
+      })
     },
     logout: (state) => {
       state = initialState;
@@ -178,13 +182,13 @@ export const postsSlice = createSlice({
   
 });
 
-export const { setPosts, addPost, logout, setUserPosts, updatePost } = postsSlice.actions;
+export const { setPosts, addPost, logout, setUserPosts, updateAuthorPosts, updatePost } = postsSlice.actions;
 
 export const selectPosts = (state: any) => state.posts.posts
 
-export const selectUserPosts = (state: any) => {
+export const selectUserPosts = (state: any, userId: string) => {
   return {
-    userPosts: state.posts.userPosts,
+    userPosts: state.posts.posts.filter((post: any) => post.createdBy === userId),
     isLoading: state.posts.isLoading,
   };
 };
