@@ -39,8 +39,6 @@ const LoginPage = () => {
           const user = await getUserByUid(response.user.uid);
           dispatch(login(response.user));
           dispatch(setUser(user));
-          dispatch(fetchTotalPosts());
-          dispatch(fetchPaginatedPosts({ page: 0, limit: 100, lastDoc: null }));
           CustomToast({ variant: "success", message: "You're now logged in!"});
           navigate("/lastest")
         } else {
