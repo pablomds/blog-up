@@ -6,6 +6,11 @@ interface IFetchDeletePostFromPostsIds  {
   userId: string;
 };
 
+interface IFetchUpdateUser {
+  userId: string;
+  name: string;
+};
+
 interface User {
   authProvider: string;
   createdDate: number;
@@ -30,6 +35,15 @@ export const fetchDeletePostFromPostsIds = createAsyncThunk("user/fetchDeletePos
   }
 });
 
+export const fetchUpdateUser = createAsyncThunk("user/fetchUpdateUser", async ({ userId, name } : IFetchUpdateUser) => {
+  
+  await updateUser(userId, { name } );
+
+  return {
+    name
+  }
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
@@ -46,6 +60,11 @@ export const userSlice = createSlice({
       .addCase(fetchDeletePostFromPostsIds.fulfilled, (state, action) => {
         if (state.user) {
           state.user.postsIds = action.payload.postsIds
+        }
+      })
+      .addCase(fetchUpdateUser.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.name = action.payload.name
         }
       });
   },
