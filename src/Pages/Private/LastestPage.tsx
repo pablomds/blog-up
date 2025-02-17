@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '@/Redux/configureStore'; 
 import { fetchTotalPosts, fetchPaginatedPosts, setCurrentPage, selectPostsAndTotal } from '@/Redux/Slices/postsSlice';
 import BlogPosts from '@/Components/BlogPosts/BlogPosts';
-import SkeletonBlogPost from '@/Components/BlogPosts/SkeletonBlogPost';
 
 const LastestPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,26 +48,19 @@ const LastestPage = () => {
   };
 
   return (
-    <div className={`h-full w-full flex flex-col items-start gap-y-7 pb-8 ${showSkeleton && 'overflow-hidden'} `}>
+    <div className={`h-full w-full flex flex-col items-start gap-y-7 pb-14`}>
       <div className="flex flex-col items-center">
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">Latest</h1>
       </div>
-      {showSkeleton ? (
-        <>
-          <SkeletonBlogPost />
-          <SkeletonBlogPost />
-          <SkeletonBlogPost />
-        </>
-      ) : (
         <BlogPosts
-          blogPosts={posts} // Pass posts to the BlogPosts component
+          showSkeleton={showSkeleton}
+          blogPosts={posts}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           totalPosts={totalPosts}
-          onPageChange={handlePageChange} // Handler to change page
+          onPageChange={handlePageChange}
         />
-      )}
     </div>
   );
 };

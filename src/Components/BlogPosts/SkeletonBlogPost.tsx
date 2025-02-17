@@ -1,18 +1,13 @@
-import React from "react";
 import _ from "lodash";
 
-import ReadMoreText from "@/Components/BlogPosts/ReadMore";
-import BlogPostHashtag from "@/Components/BlogPosts/BlogPostHashtag";
-
 const SkeletonBlogPost = () => {
-  const slicedHashtags = ["#freewww", "#mathieu"];
   return (
     <>
-      <div className="md:flex md:flex-row md:gap-x-5 rounded-lg animate-pulse">
-        <div className="hidden md:flex flex-col items-center min-h-62">
-          <div className="font-inria-sans text-3xl bg-blog-up-black-light">00</div>
-          <div className="font-inria-sans text-3xl bg-blog-up-black-light">00</div>
-          <div className="font-inria-sans text-base bg-blog-up-black-light">00</div>
+      <div className="md:flex md:flex-row md:gap-x-5 rounded-lg animate-pulse select-none">
+        <div className="hidden md:flex flex-col items-center min-h-62 gap-y-1">
+          <div className="font-inria-sans text-3xl bg-blog-up-black-light w-10">&nbsp;</div>
+          <div className="font-inria-sans text-3xl bg-blog-up-black-light w-10">&nbsp;</div>
+          <div className="font-inria-sans text-base bg-blog-up-black-light w-10">&nbsp;</div>
         </div>
         <div className="flex flex-col gap-y-4">
           <div className="flex flex-col gap-y-7 md:gap-y-4">

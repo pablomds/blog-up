@@ -4,15 +4,31 @@ import _ from 'lodash';
 import { selectUserPosts, setUserPosts, fetchUserPostsWithIds } from '@/Redux/Slices/postsSlice';
 import { selectUser } from '@/Redux/Slices/userSlice';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppDispatch } from '@/Redux/configureStore';
-import BlogPost from '@/Components/BlogPosts/BlogPost';
-import NoPostsFound from '@/Components/BlogPosts/NoPostsFound';
+import BlogPosts from '@/Components/BlogPosts/BlogPosts';
 
 const MyProfilPage = () => {
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useSelector(selectUser);
-  const blogPosts = useSelector(selectUserPosts);
+  const itemsPerPage = 5;
+  const {userPosts, isLoading} = useSelector(selectUserPosts);
+
+  useEffect(() => {
+    if (isLoading || userPosts.length === 0) {
+      setShowSkeleton(true);
+    }
+
+    const timeout = setTimeout(() => {
+      if (!isLoading && userPosts.length > 0) {
+        setShowSkeleton(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [isLoading, userPosts.length]);
 
   useEffect(() => {
     if (currentUser?.id) {
@@ -21,8 +37,8 @@ const MyProfilPage = () => {
   }, [currentUser.id]);
 
   useEffect(() => {
-    if (blogPosts.length && currentUser) {
-      let currentPostsIds = _.map(blogPosts, (post) => post.id);
+    if (userPosts.length && currentUser) {
+      let currentPostsIds = _.map(userPosts, (post) => post.id);
       console.log()
       const postsIdsToFetch = _.differenceWith(
         currentUser.postsIds,
@@ -40,11 +56,9 @@ const MyProfilPage = () => {
     }
   }, []);
 
-  const getPostsByCreatedDateOrder = () =>
-    _.chain(blogPosts)
-      .orderBy("createdDate", "desc")
-      .map((post, index) => <BlogPost post={post} key={index} />)
-      .value();
+    const handlePageChange = (page: number) => {
+      setCurrentPage(page)
+    };
 
   return (
     <div className="font-inria-sans h-full w-full flex flex-col items-start gap-y-7 pb-4">
@@ -52,9 +66,7 @@ const MyProfilPage = () => {
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">My Profil</h1>
       </div>
-      { blogPosts.length === 0 ? (<NoPostsFound></NoPostsFound>) : (getPostsByCreatedDateOrder())}
-
-      {/* <BlogPosts currentPage={0} totalPosts={blogPosts.length} blogPosts={blogPosts} /> */}
+      <BlogPosts onPageChange={handlePageChange} showSkeleton={showSkeleton} itemsPerPage={itemsPerPage} currentPage={currentPage} totalPosts={userPosts.length} blogPosts={userPosts} />
     </div>
   );
 };

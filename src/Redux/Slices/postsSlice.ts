@@ -59,7 +59,6 @@ export const fetchUserPostsWithIds = createAsyncThunk(
       post.author = author
       return post
     });
-    console.log(posts)
     return { 
       posts
     };
@@ -118,7 +117,11 @@ export const postsSlice = createSlice({
       .addCase(fetchPaginatedPosts.pending, (state) => {
         state.isLoading = true; // ✅ Set loading to true
       })
+      .addCase(fetchUserPostsWithIds.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchUserPostsWithIds.fulfilled, (state, action) => {
+        state.isLoading = false;
         if (!Array.isArray(state.posts)) {
           state.userPosts = [];
         }
@@ -142,6 +145,14 @@ export const postsSlice = createSlice({
         state.currentPage = action.payload.page;
         state.isLoading = false;
       })
+      .addCase(fetchUserPostsWithIds.rejected, (state, action) => {
+        console.error("Failed to fetch user posts with ids", action.error);
+        state.isLoading = false;
+      })
+      .addCase(fetchTotalPosts.rejected, (state, action) => {
+        console.error("Failed to fetch total posts", action.error);
+        state.isLoading = false;
+      })
       .addCase(fetchPaginatedPosts.rejected, (state, action) => {
         console.error("Failed to fetch posts", action.error);
         state.isLoading = false;
@@ -155,7 +166,10 @@ export const { setPosts, addPost, logout,setUserPosts, deletePost, updatePost } 
 export const selectPosts = (state: any) => state.posts.posts
 
 export const selectUserPosts = (state: any) => {
-  return state.posts.userPosts;
+  return {
+    userPosts: state.posts.userPosts,
+    isLoading: state.posts.isLoading,
+  };
 };
 
 export const { setPostsAndTotal, setCurrentPage } = postsSlice.actions;

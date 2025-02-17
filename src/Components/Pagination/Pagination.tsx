@@ -24,6 +24,10 @@ const Pagination: React.FC<IPagination> = ({ currentPage, itemsPerPage, totalIte
 
   const handlePageClick = (event: { selected: number }) => {
     onPageChange(event.selected); 
+    window.scrollTo({
+      top: 0, 
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -31,7 +35,7 @@ const Pagination: React.FC<IPagination> = ({ currentPage, itemsPerPage, totalIte
       <Components currentComponents={currentComponents} />
       {pageCount > 1 && (
         <ReactPaginate
-          className="flex flex-row gap-x-4 items-center justify-center"
+          className="absolute bottom-0 left-0 right-0 flex flex-row gap-x-4 items-center justify-center pb-4"
           pageClassName="font-inria-sans"
           pageLinkClassName="w-10 h-10 rounded-full flex justify-center items-center cursor-pointer select-none"
           activeLinkClassName="w-10 h-10 rounded-full bg-blog-up-green bg-blog-up-gray text-blog-up-black hover:text-blog-up-black"
