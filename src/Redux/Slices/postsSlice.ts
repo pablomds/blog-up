@@ -23,7 +23,8 @@ interface IFetchUserPostsWithIds {
     totalPosts: 0,
     lastDoc: null,
     currentPage: 0,
-    page:0
+    page:0,
+    isLoading: false,
   };
 
 export const fetchTotalPosts = createAsyncThunk("posts/fetchTotalPosts", async () => {
@@ -114,11 +115,14 @@ export const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchPaginatedPosts.pending, (state) => {
+        state.isLoading = true; // ✅ Set loading to true
+      })
       .addCase(fetchUserPostsWithIds.fulfilled, (state, action) => {
         if (!Array.isArray(state.posts)) {
-          state.userPosts = []; 
-        };
-        state.userPosts = [...state.userPosts , ...action.payload.posts];
+          state.userPosts = [];
+        }
+        state.userPosts = [...state.userPosts, ...action.payload.posts];
       })
       .addCase(fetchTotalPosts.fulfilled, (state, action) => {
         state.totalPosts = action.payload;
@@ -130,15 +134,17 @@ export const postsSlice = createSlice({
 
         state.posts = state.posts.concat(
           action.payload.newPosts.map((post: any) => ({
-            ...post, 
+            ...post,
             page: action.payload.page,
           }))
         );
         state.lastDoc = action.payload.lastDoc;
         state.currentPage = action.payload.page;
+        state.isLoading = false;
       })
       .addCase(fetchPaginatedPosts.rejected, (state, action) => {
         console.error("Failed to fetch posts", action.error);
+        state.isLoading = false;
       });
   },
   
@@ -156,6 +162,7 @@ export const { setPostsAndTotal, setCurrentPage } = postsSlice.actions;
 
 export const selectPostsAndTotal = (state: any) => {
   return {
+    isLoading: state.posts.isLoading,
     posts: state.posts.posts || [],
     totalPosts: state.posts.totalPosts,
     lastDoc: state.posts.lastDoc,
