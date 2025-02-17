@@ -1,19 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { updateUser } from "@/Controllers/usersControllers";
+
+interface IFetchDeletePostFromPostsIds  {
+  postsIds: string[];
+  userId: string;
+};
+
+interface User {
+  authProvider: string;
+  createdDate: number;
+  email: string;
+  isActive: boolean;
+  name: string;
+  postsIds: string[];
+  uid: string;
+  updatedDate: number;
+}
 
 const initialState = {
-  user: null
+  user: null as User | null
 }
+
+export const fetchDeletePostFromPostsIds = createAsyncThunk("user/fetchDeletePostFromPostsIds", async ({ userId, postsIds } : IFetchDeletePostFromPostsIds) => {
+  
+  await updateUser(userId,{ postsIds });
+
+  return {
+    postsIds
+  }
+});
 
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
     setUser: (state, action) => {
-        state.user = action.payload
+      state.user = action.payload;
     },
     logout: (state) => {
-        state.user = initialState.user;
-    }
+      state.user = initialState.user;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchDeletePostFromPostsIds.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.postsIds = action.payload.postsIds
+        }
+      });
   },
 });
 

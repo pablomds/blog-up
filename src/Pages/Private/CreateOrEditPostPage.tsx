@@ -6,18 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { Trash2 } from 'lucide-react';
 
-import { addPost, selectPostWithId, updatePost as updatePostInRedux, deletePost as deletePostInRedux } from '@/Redux/Slices/postsSlice';
-import { selectUser, setUser } from '@/Redux/Slices/userSlice';
-import { createPost, deletePost, updatePost } from '@/Controllers/postsControllers';
+import { addPost, selectPostWithId, updatePost as updatePostInRedux, fetchDeletePost } from '@/Redux/Slices/postsSlice';
+import { selectUser, setUser, fetchDeletePostFromPostsIds } from '@/Redux/Slices/userSlice';
+import { createPost, updatePost } from '@/Controllers/postsControllers';
 import { updateUser } from '@/Controllers/usersControllers';
 import { PostSchema, FormPostSchema } from '@/Schemas/PostSchema';
 
 import CustomToast from '@/Components/Global/Toast/CustomToast';
+import { AppDispatch } from '@/Redux/configureStore';
 
 const CreateOrEditPostPage = () => {
 
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const currentUser = useSelector(selectUser);
 
@@ -95,9 +96,9 @@ const CreateOrEditPostPage = () => {
 
   const onDelete = async () => {
     try {
-      await deletePost(selectedPost.id)
-      dispatch(deletePostInRedux({id: selectedPost.id}));
-      dispatch(setUser({...currentUser, postsIds: _.filter(currentUser.postsIds, (postId: any) => postId !== selectedPost.id) }));
+      const filteredPostsIds = _.filter(currentUser.postsIds, (postId: any) => postId !== selectedPost.id);
+      dispatch(fetchDeletePost({postId: selectedPost.id}));
+      dispatch(fetchDeletePostFromPostsIds({ userId: currentUser.id, postsIds: filteredPostsIds }));
       CustomToast({ variant: "success", message: "Your Post Was Deleted!"});
       navigate("/lastest");
     } catch (error) {
