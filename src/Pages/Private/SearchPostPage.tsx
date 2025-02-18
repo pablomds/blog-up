@@ -4,8 +4,7 @@ import _ from 'lodash';
 import { X, Search } from 'lucide-react';
 
 import { selectPosts } from '@/Redux/Slices/postsSlice';
-
-import BlogPosts from '@/Components/BlogPosts/BlogPosts';
+import BlogPost from '@/Components/BlogPosts/BlogPost';
 
 const SearchPostPage = () => {
   const [postTitle, setPostTitle] = useState<string>("");
@@ -14,6 +13,10 @@ const SearchPostPage = () => {
   const handleInput = (e: any) => {
     const searchTerm = e.target.value;
     setPostTitle(searchTerm)
+  };
+
+  const resetInput = () => {
+    setPostTitle("")
   };
 
   const filteredPosts = _.filter(blogPosts, (post) => {
@@ -30,21 +33,24 @@ const SearchPostPage = () => {
       <div className="w-full">
         <div className="flex flex-col relative w-full max-w-[508px]">
           <div className="relative w-full">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-blog-up-gray">
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blog-up-gray">
               <Search />
             </span>
             <input
               onChange={handleInput}
-              className={`w-full h-14 border-2 border-blog-up-green py-4 pl-10 pr-12 rounded-[5px] focus:outline-none`}
+              className={`w-full h-14 border-2 border-blog-up-green py-4 pl-12 pr-12 rounded-[5px] focus:outline-none`}
               placeholder="Search post by title"
+              value={postTitle}
             />
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blog-up-red">
+            <div onClick={resetInput} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blog-up-red cursor-pointer">
               <X />
-            </span>
+            </div>
           </div>
         </div>
       </div>
-      <BlogPosts blogPosts={filteredPosts} />
+      {
+        filteredPosts.map(post => <BlogPost post={post} />)
+      }
     </div>
   );
 };
