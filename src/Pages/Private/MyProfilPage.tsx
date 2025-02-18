@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { User, AtSign, Eye, EyeOff } from 'lucide-react';
 
-import { selectUserPosts, setUserPosts, fetchUserPostsWithIds, updateAuthorPosts } from '@/Redux/Slices/postsSlice';
-import { selectUser, fetchUpdateUser } from '@/Redux/Slices/userSlice';
+import { selectUserPosts, setUserPosts, fetchUserPostsWithIds, updateAuthorPosts, fetchDeleteAllUserPosts } from '@/Redux/Slices/postsSlice';
+import { selectUser, fetchUpdateUser, fetchDeleteUser } from '@/Redux/Slices/userSlice';
 
 import { AppDispatch } from '@/Redux/configureStore';
 import BlogPosts from '@/Components/BlogPosts/BlogPosts';
@@ -15,6 +15,9 @@ import Input from '@/Components/Global/Input/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { utils } from '@/Utils/utils';
 import CustomToast from '@/Components/Global/Toast/CustomToast';
+import Modal from '@/Components/Global/Modal/Modal';
+import { resetState } from '@/Redux/rootReducer';
+import { deleteUserAccount } from '@/Redux/Slices/authSlice';
 
 const InformationsSchema = yup.object({
   name: yup.string().required(),
@@ -27,6 +30,7 @@ type FormInformationsSchema = yup.InferType<typeof InformationsSchema>;
 
 const MyProfilPage = () => {
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
       const { register, handleSubmit,control, formState: { errors }, reset } = useForm<FormInformationsSchema>({
         resolver: yupResolver(InformationsSchema),
@@ -38,12 +42,12 @@ const MyProfilPage = () => {
   const {userPosts, isLoading} = useSelector((state) => selectUserPosts(state, currentUser.id));
 
   useEffect(() => {
-    if (isLoading || userPosts.length === 0) {
+    if (isLoading) {
       setShowSkeleton(true);
     }
 
     const timeout = setTimeout(() => {
-      if (!isLoading && userPosts.length > 0) {
+      if (!isLoading) {
         setShowSkeleton(false);
       }
     }, 500);
@@ -100,7 +104,13 @@ const MyProfilPage = () => {
     };
 
     const onDelete = async () => {
-      console.log('delete this user', currentUser.id)
+      dispatch(fetchDeleteUser({userId: currentUser.id}));
+      if (currentUser.postsIds) {
+        dispatch(fetchDeleteAllUserPosts({postsIds: currentUser.postsIds}))
+      };
+      dispatch(deleteUserAccount())
+      CustomToast({ variant: "success", message: "Your account was deleted!"});
+      dispatch(resetState())
     }
 
     const MyInformations = () => {
@@ -184,15 +194,23 @@ const MyProfilPage = () => {
             <div className="flex gap-x-2">
             <button
               type="submit"
-              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
+              className="font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
             >
               {"SAVE"}
             </button>
-            <div className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-red h-10 w-60 text-blog-up-white cursor-pointer flex justify-center items-center">
+            <div onClick={() => setIsModalOpen(true)} className="font-bold rounded-[10px] text-2xl bg-blog-up-red h-10 w-60 text-blog-up-white cursor-pointer flex justify-center items-center">
               DELETE ACCOUNT
             </div>
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <div className="flex flex-col justify-center items-center gap-y-4">
+              <p className="text-blog-up-gray font-semibold text-lg">Are You Sure You Want Delete Your Account ?</p>
+              <p className="text-blog-up-gray text-base">This Action Cannot Be Undone!</p>
+              <div onClick={onDelete} className="text-blog-up-white font-semibold h-10 bg-blog-up-red p-2 rounded-[5px]"> DELETE MY ACCOUNT </div>
+              </div>
+            </Modal>
             </div>
           </form>
+          
           <div>
             <p className="text-xl">Member since : {utils.formatDateToArray(currentUser.createdDate).join(" ")}</p>
             <p className="text-xl">Posts : {currentUser.postsIds.length}</p>
