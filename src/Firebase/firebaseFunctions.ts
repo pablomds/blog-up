@@ -7,10 +7,19 @@ import { db, storage } from "@/Firebase/firebaseConfig";
 import { utils } from "@/Utils/utils";
 
 export const getDataFromCollection = async (collectionName: string, dataId: string) => {
+
     const docRef = doc(db, collectionName, dataId);
     const docSnap = await getDoc(docRef);
-    return { ...docSnap.data(), id: docSnap.id }
-};
+  
+    if (!docSnap.exists()) {
+      throw new Error("Document does not exist");
+    }
+  
+    const docData = docSnap.data();
+    
+  
+    return { ...docData, id: docSnap.id };
+  };
 
 export const getAllDataFromCollectionWithIds = async (collectionName: string, listOfIds: string[]) => {
 
@@ -140,7 +149,7 @@ export const addDocumentToCollection = async (collectionName: string, dataToColl
         dataToCollection.updatedDate = utils.getUnixTimeStamp(new Date());
         dataToCollection.isActive = true;
         const addedDocumentToCollection = collection(db, collectionName);    
-        const newDocRef = await addDoc(addedDocumentToCollection, dataToCollection);
+        const newDocRef = await addDoc(addedDocumentToCollection, _.omit(dataToCollection, ['id']));
         return newDocRef.id
     } catch (error) {
         console.log('Error On addDocumentToCollection()', error);
@@ -168,6 +177,15 @@ export const deleteDocumentFromCollection = async (collectionName: string, dataT
     const docRefToDelete = doc(db, collectionName, dataToDeleteId)
     await deleteDoc(docRefToDelete)
 
+};
+
+export const deleteDocumentsFromCollection = async (collectionName: string, dataToDeleteIds: string[]): Promise<void> => {
+    const deletePromises = dataToDeleteIds.map(async (id) => {
+        const docRefToDelete = doc(db, collectionName, id);
+        return deleteDoc(docRefToDelete);
+    });
+
+    await Promise.all(deletePromises);
 };
 
 export const deleteElementFromArrayInDocument = async (collectionName: string, documentId: string, field: string, elementId: string) => {
