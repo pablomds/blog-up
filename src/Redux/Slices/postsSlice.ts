@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { createSlice,createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { getTotalPosts, getPaginatedPosts, getPostsWithIds, deletePost } from "@/Controllers/postsControllers";
+import { getTotalPosts, getPaginatedPosts, getPostsWithIds, deletePost, deletePostsWithListOfIds } from "@/Controllers/postsControllers";
 import { utils } from "@/Utils/utils";
 import { getUserByPostId } from "@/Controllers/usersControllers";
 
@@ -15,7 +15,11 @@ interface FetchPaginatedPostsArgs {
 interface IFetchUserPostsWithIds {
   author: string;
   postsIds: string[]
-}
+};
+
+interface IFetchDeleteUserPosts {
+  postsIds: string[];
+};
 
 interface IFetchDeletePost {
   postId: string;
@@ -78,6 +82,14 @@ export const fetchDeletePost = createAsyncThunk(
     }
   }
 );
+
+export const fetchDeleteAllUserPosts = createAsyncThunk(
+  "posts/fetchDeleteAllUserPosts",
+  async ({ postsIds }: IFetchDeleteUserPosts) => {
+    await deletePostsWithListOfIds(postsIds)
+  }
+);
+
 
 
 export const postsSlice = createSlice({
