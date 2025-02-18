@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateUser } from "@/Controllers/usersControllers";
+import { updateUser, deleteUser } from "@/Controllers/usersControllers";
 
 interface IFetchDeletePostFromPostsIds  {
   postsIds: string[];
@@ -10,6 +10,10 @@ interface IFetchUpdateUser {
   userId: string;
   name: string;
 };
+
+interface IFetchDeleteUser {
+  userId: string
+}
 
 interface User {
   authProvider: string;
@@ -42,6 +46,12 @@ export const fetchUpdateUser = createAsyncThunk("user/fetchUpdateUser", async ({
   return {
     name
   }
+});
+
+export const fetchDeleteUser = createAsyncThunk("user/fetchDeleteUser", async ({ userId } : IFetchDeleteUser) => {
+  
+  await deleteUser(userId);
+
 });
 
 export const userSlice = createSlice({
