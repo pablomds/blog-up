@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  deleteUser
 } from "firebase/auth";
 import { User } from "firebase/auth";
 
@@ -51,6 +52,14 @@ const signUpWithEmailAndPassword = async (
     return uid;
   } catch (error) {
     console.error("Error On signUpWithEmailAndPassword() ", error);
+  }
+};
+
+export const deleteAuthenticatedUser = async (user: User): Promise<void> => {
+  try {
+      await deleteUser(user);
+  } catch (error) {
+      console.error("Error deleting user:", error);
   }
 };
 
