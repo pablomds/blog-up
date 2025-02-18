@@ -1,4 +1,4 @@
-import { addDocumentToCollection, getAllDataFromCollectionWithWhereArrayContains, getDataFromCollectionWithWhereArray, updateDocumentToCollection } from "../Firebase/firebaseFunctions";
+import { addDocumentToCollection, getAllDataFromCollectionWithWhereArrayContains, getDataFromCollectionWithWhereArray, updateDocumentToCollection, deleteDocumentFromCollection } from "../Firebase/firebaseFunctions";
 
 import { COLLECTIONS } from "@/Firebase/collections";
 
@@ -18,7 +18,15 @@ export const updateUser = async (userId: string, dataToUpdate: any):Promise<void
     } catch (error) {
         console.log("Error On updateuser()", error);
     }
-}
+};
+
+export const deleteUser = async (userId: string):Promise<void> => {
+    try {
+        await deleteDocumentFromCollection(COLLECTIONS.USERS,userId);
+    } catch (error) {
+        console.log("Error On deleteUser()", error);
+    }
+};
 
 export const getUserByUid = async (uid: string) => {
     try {
