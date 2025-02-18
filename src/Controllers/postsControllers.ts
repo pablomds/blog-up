@@ -1,4 +1,4 @@
-import { addDocumentToCollection, deleteDocumentFromCollection,getAllDataFromCollectionWithIds, getAllDataFromCollection, getDataFromCollection, getPaginatedDataFromCollection, getTotalDataInCollection, updateDocumentToCollection } from "@/Firebase/firebaseFunctions";
+import { addDocumentToCollection, deleteDocumentFromCollection,getAllDataFromCollectionWithIds, getAllDataFromCollection, getDataFromCollection, getPaginatedDataFromCollection, getTotalDataInCollection, updateDocumentToCollection, deleteDocumentsFromCollection } from "@/Firebase/firebaseFunctions";
 
 import { COLLECTIONS } from "@/Firebase/collections";
 
@@ -25,6 +25,14 @@ export const deletePost = async (postId: string) => {
         await deleteDocumentFromCollection(COLLECTIONS.POSTS, postId);
     } catch (error) {
         console.log("Error On deletePost()", error)
+    }
+};
+
+export const deletePostsWithListOfIds = async (postsIds: string[]) => {
+    try {
+        await deleteDocumentsFromCollection(COLLECTIONS.POSTS, postsIds);
+    } catch (error) {
+        console.log("Error On deletePostsWithListOfIds()", error)
     }
 };
 
