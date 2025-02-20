@@ -32,7 +32,7 @@ type FormInformationsSchema = yup.InferType<typeof InformationsSchema>;
 const MyProfilPage = () => {
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-      const { register, handleSubmit,control, formState: { errors }, reset } = useForm<FormInformationsSchema>({
+      const { handleSubmit,control, formState: { errors }, reset } = useForm<FormInformationsSchema>({
         resolver: yupResolver(InformationsSchema),
         mode: "onSubmit"
       });

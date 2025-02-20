@@ -4,10 +4,9 @@ import { motion, useAnimation , useInView } from 'motion/react';
 type props = {
   children: ReactNode;
   className?: string;
-  delay?: number;
 };
 
-export default function Slide({ children, delay, className }: props) {
+export default function Slide({ children, className }: props) {
     const ref = useRef(null);
     const isInview = useInView(ref, { once: true });
     const controls = useAnimation();

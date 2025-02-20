@@ -28,7 +28,6 @@ const BlogPost = ({ post } : any) => {
           <div className="flex flex-col gap-y-3">
             <ReadMoreText
               text={post.text}
-              maxLines={2}
               readMoreLink={`/post/${post.id}`}
             />
             <div className="flex flex-row justify-between">

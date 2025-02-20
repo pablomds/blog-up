@@ -3,13 +3,11 @@ import { Link } from "react-router";
 
 interface IReadMore {
   text: string;
-  maxLines?: number;
   readMoreLink: string;
 }
 
 const ReadMoreText: React.FC<IReadMore> = ({
   text,
-  maxLines = 3,
   readMoreLink,
 }) => {
   const textRef = useRef<HTMLParagraphElement>(null);
