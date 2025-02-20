@@ -14,6 +14,7 @@ import { PostSchema, FormPostSchema } from '@/Schemas/PostSchema';
 
 import CustomToast from '@/Components/Global/Toast/CustomToast';
 import { AppDispatch } from '@/Redux/configureStore';
+import ActionButton from '@/Components/Global/Button/ActionButton';
 
 const CreateOrEditPostPage = () => {
 
@@ -108,8 +109,8 @@ const CreateOrEditPostPage = () => {
   };
 
   return (
-    <div className="h-full w-full flex flex-col items-start gap-y-7">
-      <div className="flex flex-col items-center">
+    <div className="h-full w-full flex flex-col items-start gap-y-7 mx-auto md:items-start md:px-20 px-10 pt-28 pb-8">
+      <div className="flex flex-col">
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">
           {selectedPost ? `Edit Post` : "Create a New Post"}
@@ -147,12 +148,7 @@ const CreateOrEditPostPage = () => {
           )}
         />
         <div className="flex flex-row gap-x-4">
-          <button
-            type="submit"
-            className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-          >
-            {"SAVE"}
-          </button>
+          <ActionButton variant="valid" type="submit" label="SAVE" />
           {selectedPost && isOwner() ? (
             <div
               onClick={() => onDelete()}

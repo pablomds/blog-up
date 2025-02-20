@@ -12,6 +12,7 @@ import { SignUpSchema, FormSignUpSchema } from '@/Schemas/SignUpSchema';
 import Input from '@/Components/Global/Input/Input';
 import CustomToast from '@/Components/Global/Toast/CustomToast';
 import backgroundSignUp from "@/Assets/Background/background-sign-up.jpg";
+import ActionButton from '@/Components/Global/Button/ActionButton';
 
 
 const SignUpPage = () => {
@@ -138,16 +139,15 @@ const SignUpPage = () => {
               />
             )}
           />
-          <button
+          <ActionButton
+            variant="valid"
             type="submit"
-            className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-          >
-            {"SIGN UP"}
-          </button>
+            label="SIGN UP"
+          />
         </form>
         <div className="flex flex-col text-xl font-inria-sans bold">
           <span className="text-blog-up-white">Already have an account ?</span>
-          <Link to="/login" className="text-blog-up-green cursor-pointer">Login</Link>
+          <Link to="/login" className="text-blog-up-green cursor-pointer hover:text-blog-up-green-dark">Login</Link>
         </div>
       </div>
     </div>

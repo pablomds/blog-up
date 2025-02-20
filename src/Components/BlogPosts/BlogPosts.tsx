@@ -11,48 +11,40 @@ import SkeletonBlogPost from './SkeletonBlogPost';
 
 interface IBlogPosts {
     blogPosts: any;
-    currentPage: number;
-    totalPosts: number;
-    itemsPerPage: number;
     showSkeleton: boolean;
-    onPageChange:(page: number) => void;
 };
 
 const BlogPosts: React.FC<IBlogPosts> = ({
   blogPosts,
-  currentPage,
-  totalPosts,
-  itemsPerPage,
   showSkeleton,
-  onPageChange,
 }) => {
 
-  const getPostsByCreatedDateOrder = () =>
+  const getPostsByCreatedDateOrder = () => 
     _.chain(blogPosts)
       .orderBy("createdDate", "desc")
       .map((post, index) => <BlogPost post={post} key={index} />)
       .value();
 
-  if (showSkeleton) {
-    return (
-      _.map(_.range(itemsPerPage), item => <SkeletonBlogPost key={item}/> )
-    )
+  const posts = getPostsByCreatedDateOrder();
+
+  const renderPosts = () => {
+    if (showSkeleton) {
+      return _.map(posts, (_, index) => (
+        <SkeletonBlogPost key={index} />
+      ));
+    } else if (posts.length) {
+      return <div className="pb-2">{posts}</div>;
+    } else {
+      return <NoPostsFound />;
+    }
   };
 
-  if (blogPosts.length === 0) {
-    return <NoPostsFound />;
-  }
-
   return (
-    <div className="flex flex-col gap-y-7">
-      <Pagination
-        currentPage={currentPage}
-        items={getPostsByCreatedDateOrder()}
-        itemsPerPage={itemsPerPage}
-        totalItems={totalPosts}
-        onPageChange={onPageChange}
-      />
-    </div>
+    <>
+      <div className="md:pr-20 xl:pr-96">
+        {renderPosts()}
+      </div>
+    </>
   );
 };
 

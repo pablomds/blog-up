@@ -18,6 +18,7 @@ import CustomToast from '@/Components/Global/Toast/CustomToast';
 import Modal from '@/Components/Global/Modal/Modal';
 import { resetState } from '@/Redux/rootReducer';
 import { deleteUserAccount } from '@/Redux/Slices/authSlice';
+import ActionButton from '@/Components/Global/Button/ActionButton';
 
 const InformationsSchema = yup.object({
   name: yup.string().required(),
@@ -31,14 +32,12 @@ type FormInformationsSchema = yup.InferType<typeof InformationsSchema>;
 const MyProfilPage = () => {
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(0);
       const { register, handleSubmit,control, formState: { errors }, reset } = useForm<FormInformationsSchema>({
         resolver: yupResolver(InformationsSchema),
         mode: "onSubmit"
       });
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useSelector(selectUser);
-  const itemsPerPage = 5;
   const {userPosts, isLoading} = useSelector((state) => selectUserPosts(state, currentUser.id));
 
   useEffect(() => {
@@ -70,7 +69,6 @@ const MyProfilPage = () => {
   useEffect(() => {
     if (userPosts.length && currentUser) {
       let currentPostsIds = _.map(userPosts, (post) => post.id);
-      console.log()
       const postsIdsToFetch = _.differenceWith(
         currentUser.postsIds,
         currentPostsIds,
@@ -86,10 +84,6 @@ const MyProfilPage = () => {
       }
     }
   }, []);
-
-    const handlePageChange = (page: number) => {
-      setCurrentPage(page)
-    };
 
     const onSubmit = async (formValues: FormInformationsSchema) => {
       const { name } = formValues;
@@ -192,13 +186,8 @@ const MyProfilPage = () => {
               )}
             />
             <div className="flex gap-x-2">
-            <button
-              type="submit"
-              className="font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-            >
-              {"SAVE"}
-            </button>
-            <div onClick={() => setIsModalOpen(true)} className="font-bold rounded-[10px] text-2xl bg-blog-up-red h-10 w-60 text-blog-up-white cursor-pointer flex justify-center items-center">
+            <ActionButton variant="valid" type="submit" label="SAVE" />
+            <div onClick={() => setIsModalOpen(true)} className="font-bold rounded-[10px] text-2xl bg-blog-up-red h-10 w-60 text-blog-up-white cursor-pointer flex justify-center items-center hover:bg-blog-up-dark-red">
               DELETE ACCOUNT
             </div>
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -220,13 +209,12 @@ const MyProfilPage = () => {
     }
 
   return (
-    <div className="font-inria-sans h-full w-full flex flex-col items-start gap-y-7 pb-4">
-      <div className="flex flex-col items-center">
+    <div className="mx-auto flex flex-col items-start md:px-20 px-10 pt-28 pb-8">
+      <div className="flex flex-col pb-4">
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">My Profil</h1>
       </div>
-      <Tabs tabs={["Posts", "Informations"]} tabsComponents={[<BlogPosts onPageChange={handlePageChange} showSkeleton={showSkeleton} itemsPerPage={itemsPerPage} currentPage={currentPage} totalPosts={userPosts.length} blogPosts={userPosts} />, <MyInformations />]} />
-      {/* <BlogPosts onPageChange={handlePageChange} showSkeleton={showSkeleton} itemsPerPage={itemsPerPage} currentPage={currentPage} totalPosts={userPosts.length} blogPosts={userPosts} /> */}
+      <Tabs tabs={["Posts", "Informations"]} tabsComponents={[<BlogPosts showSkeleton={showSkeleton}  blogPosts={userPosts} />, <MyInformations />]} />
     </div>
   );
 };
