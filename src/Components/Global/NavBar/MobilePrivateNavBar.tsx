@@ -19,7 +19,7 @@ const MobilePrivateNavBar: React.FC<IDesktopPrivateSideBar> = ({ navLinks, usern
 
   if (!isOpen) {
     return (
-      <div onClick={() => setIsOpen(true)} className="md:hidden fixed bottom-4 right-2 z-10 cursor-pointer">
+      <div onClick={() => setIsOpen(true)} className="md:hidden fixed bottom-12 right-2 z-10 cursor-pointer">
         <div className="bg-blog-up-black-light rounded-full p-2 shadow">
         <Menu className="h-10 w-10 text-blog-up-green hover:text-blog-up-gray" />
         </div>

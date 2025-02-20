@@ -18,6 +18,7 @@ import Input from '@/Components/Global/Input/Input';
 import CustomToast from '@/Components/Global/Toast/CustomToast';
 import backgroundLogin from "@/Assets/Background/background-login.jpg"
 import { AppDispatch } from '@/Redux/configureStore';
+import ActionButton from '@/Components/Global/Button/ActionButton';
 
 const LoginPage = () => {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
@@ -104,16 +105,11 @@ const LoginPage = () => {
               />
             )}
           />
-          <button
-            type="submit"
-            className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-          >
-            {"LOGIN"}
-          </button>
+          <ActionButton variant={"valid"} label={"LOGIN"} />
         </form>
         <div className="flex flex-col text-xl font-inria-sans bold">
           <span className="text-blog-up-white">Don't have an account ?</span>
-          <Link to="/sign-up" className="text-blog-up-green cursor-pointer"> Sign Up</Link>
+          <Link to="/sign-up" className="text-blog-up-green cursor-pointer hover:text-blog-up-green-dark"> Sign Up</Link>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { selectPostWithId } from '@/Redux/Slices/postsSlice';
 import { selectUser } from '@/Redux/Slices/userSlice';
 import { utils } from '@/Utils/utils';
+import ActionButton from '@/Components/Global/Button/ActionButton';
 
 interface Post {
   id: string;
@@ -59,7 +60,7 @@ const BlogPostDetailsPage = () => {
   const hashtags = post.text.match(/#[^\s#]+/g);
 
   return (
-    <div className="flex flex-col gap-y-5 items-start pb-20">
+    <div className="flex flex-col gap-y-5 items-start mx-auto md:items-start md:px-20 px-10 pt-28 pb-8">
       <div className="flex flex-col items-center">
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">Post</h1>
@@ -87,7 +88,7 @@ const BlogPostDetailsPage = () => {
         <Link
           to={`/create-post/${post.id}`}
           type="submit"
-          className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
+          className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green hover:bg-blog-up-green-dark h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
         >
           {"EDIT"}
         </Link>
