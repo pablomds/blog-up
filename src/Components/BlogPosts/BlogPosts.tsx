@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import BlogPost from '@/Components/BlogPosts/BlogPost';
-import Pagination from '@/Components/Pagination/Pagination';
 import NoPostsFound from './NoPostsFound';
 import SkeletonBlogPost from './SkeletonBlogPost';
 

@@ -9,15 +9,14 @@ import {
 } from "firebase/auth";
 import { User } from "firebase/auth";
 
-import { auth, db } from "@/Firebase/firebaseConfig";
+import { auth } from "@/Firebase/firebaseConfig";
 
 const googleProvider = new GoogleAuthProvider();
 
 
 const signInWithGoogle = async () => {
   try {
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
+    await signInWithPopup(auth, googleProvider);
   } catch (error) {
     console.error("Error occured : ", error);
   }

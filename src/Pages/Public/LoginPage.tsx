@@ -10,7 +10,6 @@ import { AtSign, Eye, EyeOff } from 'lucide-react';
 import { logInWithEmailAndPassword } from '@/Firebase/authentication';
 import { getUserByUid } from '@/Controllers/usersControllers';
 import { setUser } from '@/Redux/Slices/userSlice';
-import { fetchPaginatedPosts, fetchTotalPosts } from '@/Redux/Slices/postsSlice';
 import { login } from '@/Redux/Slices/authSlice';
 import { LoginSchema, FormLogin } from '@/Schemas/LoginSchema';
 
@@ -21,13 +20,12 @@ import { AppDispatch } from '@/Redux/configureStore';
 import ActionButton from '@/Components/Global/Button/ActionButton';
 
 const LoginPage = () => {
-  const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-    const { register, handleSubmit,control, formState: { errors } } = useForm<FormLogin>({
+    const { handleSubmit,control, formState: { errors } } = useForm<FormLogin>({
       resolver: yupResolver(LoginSchema),
       mode: "onSubmit"
     });

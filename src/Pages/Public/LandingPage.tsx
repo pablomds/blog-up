@@ -5,7 +5,7 @@ import FreeImaginationSvg from '@/Assets/Svg/Ilustration.svg'
 
 const LandingPage = () => {
   return (
-    <Slide delay={0.3}>
+    <Slide>
     <div id="home" className="flex flex-col min-h-screen min-w-screen overflow-hidden justify-center items-center pt-2 px-3 xs:pt-5 xs:px-6 gap-y-14 xs:gap-y-20 md:px-15 md:pt-0 relative select-none">
       <div className="flex flex-col md:flex-row gap-y-16 xs:gap-y-20 md:gap-y-0">
         <div className="flex flex-col gap-y-10">
