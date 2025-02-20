@@ -132,8 +132,8 @@ export const postsSlice = createSlice({
         return post
       })
     },
-    logout: (state) => {
-      state = initialState;
+    logout: () => {
+      return { ...initialState };
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload; // ✅ Update current page in state
