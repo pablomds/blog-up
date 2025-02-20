@@ -7,7 +7,7 @@ const NavBar = () => {
     { label: "About", link: "/#about" },
     { label: "Contact", link: "/#contact" },
     { label: "Login", link: "/login" },
-    { label: "Sign Up", link: "/signup" },
+    { label: "Sign Up", link: "/sign-up" },
   ];
   return (
     <>
