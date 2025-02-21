@@ -187,14 +187,14 @@ const MyProfilPage = () => {
             />
             <div className="flex gap-x-2">
             <ActionButton variant="valid" type="submit" label="SAVE" />
-            <div onClick={() => setIsModalOpen(true)} className="font-bold rounded-[10px] text-2xl bg-blog-up-red h-10 w-60 text-blog-up-white cursor-pointer flex justify-center items-center hover:bg-blog-up-dark-red">
-              DELETE ACCOUNT
+            <div onClick={() => setIsModalOpen(true)} className="font-bold rounded-[10px]  text-2xl bg-blog-up-red h-10 w-52 max-w-[150px] text-blog-up-white cursor-pointer flex justify-center items-center hover:bg-blog-up-dark-red">
+              DELETE
             </div>
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <div className="flex flex-col justify-center items-center gap-y-4">
               <p className="text-blog-up-gray font-semibold text-lg">Are You Sure You Want Delete Your Account ?</p>
               <p className="text-blog-up-gray text-base">This Action Cannot Be Undone!</p>
-              <div onClick={onDelete} className="text-blog-up-white font-semibold h-10 bg-blog-up-red p-2 rounded-[5px]"> DELETE MY ACCOUNT </div>
+              <div onClick={onDelete} className="text-blog-up-white font-semibold h-10 bg-blog-up-red p-2 rounded-[5px] cursor-pointer"> DELETE MY ACCOUNT </div>
               </div>
             </Modal>
             </div>
