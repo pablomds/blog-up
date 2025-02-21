@@ -69,7 +69,7 @@ const ContactPage = () => {
         <h1 className="font-inria-sans text-7xl -rotate-90 z-10">Contact</h1>
         <div className="h-full w-1 bg-white z-10"></div>
       </div>
-      <div className="h-full w-full md:w-4/5 px-6 pt-13 pb-5 md:pt-24  flex flex-col justify-between">
+      <div className="h-full w-full md:w-4/5 px-6 pt-13 pb-5 md:pt-24  flex flex-col justify-between gap-y-2">
         <div className="flex flex-col items-center md:items-start md:gap-y-12">
           <h1 className="md:hidden font-inria-sans text-5xl">Contact</h1>
           <div className="pt-6 gap-y-3 md:gap-y-2">
@@ -136,7 +136,7 @@ const ContactPage = () => {
             </button>
           </form>
         </div>
-        <div className="flex items-end justify-center md:justify-start">
+        <div className="flex items-end justify-start md:justify-start">
           <span className="font-inria-sans">
             © 2025 Blog Up. All rights reserved.
           </span>
