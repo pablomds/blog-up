@@ -24,13 +24,13 @@ const DesktopNavBar = ({ navLinks }: any) => {
       }`}
     >
       <div className="py-2 px-5 flex flex-row justify-between">
-        <div className="font-inria-sans text-bold text-4xl">Blog Up</div>
+        <Link to={navLinks[0].link} className="font-inria-sans text-bold text-4xl text-blog-up-white hover:text-blog-up-gray">Blog Up</Link>
         <div className="flex flex-row items-center gap-x-10">
           {navLinks.map((navItem: any, index: number) => (
             <Link
               key={index}
               to={navItem.link}
-              className="font-inria-sans text-base cursor-pointer"
+              className="font-inria-sans text-base cursor-pointer text-blog-up-white hover:text-blog-up-gray"
             >
               {navItem.label}
             </Link>
