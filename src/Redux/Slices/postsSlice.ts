@@ -210,13 +210,16 @@ export const { setPostsAndTotal, setCurrentPage } = postsSlice.actions;
 export const selectPostsAndTotal = (state: any) => {
   return {
     isLoading: state.posts.isLoading,
-    posts: state.posts.posts || [],
+    posts: _.chain(state.posts.posts)
+    .orderBy("createdDate", "desc")
+    .value() || [],
     totalPosts: state.posts.totalPosts,
     lastDoc: state.posts.lastDoc,
     currentPage: state.posts.currentPage,
     page: state.posts.page
   };
 };
+
 
 export const selectPostWithId = (state: any, id: string | undefined):any | null =>
   _.find(state.posts.posts, ["id", id]);
