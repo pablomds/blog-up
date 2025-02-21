@@ -1,3 +1,20 @@
+# Blog Up
+Blog Up is an imaginative blogging platform that showcases my skills in web development and design. This project incorporates various features to enhance user experience and functionality, making it a comprehensive tool for bloggers and readers alike.
+
+Features
+* CRUD Operations: Create, Read, Update, and Delete blog posts seamlessly.
+* User Authentication: Secure sign-up and login processes to ensure user data protection.
+* Redux State Management: Efficiently manage application state for a smooth user experience.
+* Responsive Design: A user-friendly interface that works well on both desktop and mobile devices.
+* Rich Text Editor: Write and format blog posts with ease, enhancing creativity and engagement.
+
+# Project Preview
+
+![homepage](./screenshots/homepage.png)
+![loginpage](./screenshots/loginpage.png)
+![lastestpage](./screenshots/lastestpage.png)
+
+
 # React + TypeScript + Vite + Tailwind + Firebase + PNPM
 
 This is my personal boilerplate in order to start fast projects. My main goal here is to speed up installation process of all my projects using this boilerplate.
