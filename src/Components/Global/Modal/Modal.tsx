@@ -9,7 +9,7 @@ interface IModal {
 const Modal = ({ open, onClose, children } : IModal) => {
   return (
     <div onClick={onClose} className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? "visible bg-blog-up-black-light/80" : "invisible"}`}>
-        <div className={`bg-blog-up-black rounded-xl shadow p-6 transition-all ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}`}>
+        <div className={`bg-blog-up-black rounded-xl shadow m-2 p-6 transition-all ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}`}>
             {children}
         </div>
     </div>
