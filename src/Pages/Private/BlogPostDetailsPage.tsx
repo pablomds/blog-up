@@ -80,7 +80,7 @@ const BlogPostDetailsPage = () => {
       {post ? (
         <>
           <div className="flex flex-col gap-y-3">
-            <div className="flex gap-x-4">
+            <div className="flex flex-col gap-y-2">
               <h1 className="font-inria-sans text-3xl text-blog-up-green">
                 {post.title}
               </h1>
