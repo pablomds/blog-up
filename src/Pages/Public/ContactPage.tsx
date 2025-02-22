@@ -58,7 +58,7 @@ const ContactPage = () => {
       }}
       viewport={{ amount: 0.6 }}
       id="contact"
-      className="h-screen bg-blog-up-black relative flex flex-row md:gap-x-28 select-none"
+      className={`h-screen bg-blog-up-black relative flex flex-row md:gap-x-28 select-none ${isEmailSent && 'overflow-hidden'}`}
     >
       <div
         className="max-md:hidden w-1/5 h-full bg-blog-up-white left-0 top-0 bg-cover bg-center flex justify-between items-center relative"
@@ -69,6 +69,9 @@ const ContactPage = () => {
         <h1 className="font-inria-sans text-7xl -rotate-90 z-10">Contact</h1>
         <div className="h-full w-1 bg-white z-10"></div>
       </div>
+      {
+        isEmailSent && <Loader />
+      }
       <div className="h-full w-full md:w-4/5 px-6 pt-13 pb-5 md:pt-24  flex flex-col justify-between gap-y-2">
         <div className="flex flex-col items-center md:items-start md:gap-y-12">
           <h1 className="md:hidden font-inria-sans text-5xl">Contact</h1>
@@ -132,7 +135,7 @@ const ContactPage = () => {
               type="submit"
               className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 md:max-h-[40px] md:max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
             >
-              { isEmailSent ? <Loader/> : "SEND IT"}
+              {"SEND IT"}
             </button>
           </form>
         </div>
