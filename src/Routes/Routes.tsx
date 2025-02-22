@@ -13,17 +13,18 @@ import CreateOrEditPostPage from '@/Pages/Private/CreateOrEditPostPage';
 import MyProfilPage from '@/Pages/Private/MyProfilPage';
 import SearchPostPage from '@/Pages/Private/SearchPostPage';
 import NotFoundPage from '@/Pages/Public/NotFoundPage';
+import HomePage from '@/Pages/Public/HomePage';
 
 
 export const PublicRoutes = () => {
-  return [
-    <Route>
-      <Route key="lading-page" path="/" element={<PublicLayout />} />
+  return (
+    <Route element={<PublicLayout />}>
+      <Route key="home-page" path="/" element={<HomePage />} />
       <Route key="login-page" path="/login" element={<LoginPage />} />
       <Route key="signup-page" path="/sign-up" element={<SignUpPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>
-  ]
+  )
 };
 
 export const PrivateRoutes = () => {
