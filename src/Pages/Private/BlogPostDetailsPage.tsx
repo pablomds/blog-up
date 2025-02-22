@@ -98,7 +98,7 @@ const BlogPostDetailsPage = () => {
               written by {post.author}
             </span>
           </div>
-          <div className="flex flex-col gap-y-3">
+          <div className="flex flex-col gap-y-3 md:pr-20 xl:pr-96">
             <Content content={post.text} />
             <div className="flex flex-row justify-between">
               <div className="md:hidden font-inria-sans text-base">
