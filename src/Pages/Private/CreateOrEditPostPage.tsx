@@ -120,6 +120,7 @@ const CreateOrEditPostPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 w-full max-w-[508px]"
       >
+        <div className="flex flex-col">
         <Controller
           control={control}
           name={"title"}
@@ -135,18 +136,24 @@ const CreateOrEditPostPage = () => {
         <span className="font-inria-sans text-blog-up-red">
           {errors?.title && errors.title?.message}
         </span>
-        <Controller
-          control={control}
-          name={"text"}
-          render={({ field }) => (
-            <textarea
-              {...field}
-              rows={4}
-              className="font-inria-sans w-full min-h-24 h-40 max-h-60 xs:max-h-96 border-2 border-blog-up-green py-3 pl-4 pr-10 rounded-[5px] focus:outline-none resize-y overflow-auto"
-              placeholder={"Whats in your mind ?"}
-            />
-          )}
-        />
+        </div>
+        <div className="flex flex-col">
+          <Controller
+            control={control}
+            name={"text"}
+            render={({ field }) => (
+              <textarea
+                {...field}
+                rows={4}
+                className="font-inria-sans w-full min-h-24 h-40 max-h-60 xs:max-h-96 border-2 border-blog-up-green py-3 pl-4 pr-10 rounded-[5px] focus:outline-none resize-y overflow-auto"
+                placeholder={"Whats in your mind ?"}
+              />
+            )}
+          />
+          <span className="font-inria-sans text-blog-up-red">
+            {errors?.text && errors.text?.message}
+          </span>
+        </div>
         <div className="flex flex-row gap-x-4">
           <ActionButton variant="valid" type="submit" label="SAVE" />
           {selectedPost && isOwner() ? (
@@ -157,11 +164,10 @@ const CreateOrEditPostPage = () => {
               {"DELETE"}
               <Trash2 className="text-blog-up-white" />
             </div>
-          ) : <></>}
+          ) : (
+            <></>
+          )}
         </div>
-        <span className="font-inria-sans text-blog-up-red">
-          {errors?.text && errors.text?.message}
-        </span>
       </form>
     </div>
   );
