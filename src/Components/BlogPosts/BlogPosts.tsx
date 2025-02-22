@@ -47,6 +47,4 @@ const BlogPosts: React.FC<IBlogPosts> = ({
   );
 };
 
-        
-
 export default BlogPosts
