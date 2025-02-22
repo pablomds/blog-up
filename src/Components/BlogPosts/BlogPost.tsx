@@ -1,12 +1,17 @@
 import _ from 'lodash';
-
 import { utils } from '@/Utils/utils';
 
 import BlogPostHashtag from "@/Components/BlogPosts/BlogPostHashtag";
 import ReadMoreText from '@/Components/BlogPosts/ReadMore';
+import { Link } from 'react-router';
 
-const BlogPost = ({ post } : any) => {
-  
+interface IBlogPost {
+  post: any;
+  userId: string;
+}
+
+const BlogPost: React.FC<IBlogPost> = ({ post, userId } : any) => {
+
   const postDateToArray = utils.formatDateToArray(post.createdDate);
 
   const hashtags = post.text.match(/#[^\s#]+/g);
@@ -37,7 +42,9 @@ const BlogPost = ({ post } : any) => {
                 {postDateToArray.join(" ")}
               </div>
               <div className="font-inria-sans text-base text-blog-up-gray">
-                by {post.author}
+                by {post.author} {
+                  userId === post.createdBy && <Link className="text-blog-up-green hover:text-blog-up-gray rounded-xl" to={`/create-post/${post.id}`}>Edit Post</Link>
+                }
               </div>
             </div>
           </div>

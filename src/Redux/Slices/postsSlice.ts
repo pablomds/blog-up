@@ -200,7 +200,7 @@ export const selectPosts = (state: any) => state.posts.posts
 
 export const selectUserPosts = (state: any, userId: string) => {
   return {
-    userPosts: state.posts.posts.filter((post: any) => post.createdBy === userId),
+    userPosts: _.chain(state.posts.posts).orderBy("createdDate", "desc").filter((post: any) => post.createdBy === userId).value(),
     isLoading: state.posts.isLoading,
   };
 };
