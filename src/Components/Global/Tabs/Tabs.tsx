@@ -9,8 +9,7 @@ const Tabs = ({ tabs, tabsComponents}: ITabs ) => {
     const [activeTab, setActiveTab] = useState(tabs[0]);
   
     return (
-      <div className="w-full">
-        {/* Tabs Header */}
+      <div className="font-inria-sans w-full">
         <div className="flex">
           {tabs.map((tab) => (
             <button
