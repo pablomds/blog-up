@@ -18,21 +18,16 @@ const BlogPosts: React.FC<IBlogPosts> = ({
   showSkeleton,
 }) => {
 
-  const getPostsByCreatedDateOrder = () => 
-    _.chain(blogPosts)
-      .orderBy("createdDate", "desc")
-      .map((post, index) => <BlogPost post={post} key={index} />)
-      .value();
+  const RenderBlogPosts = () => 
+    _.map(blogPosts,(post, index) => <BlogPost post={post} key={index} />)
 
-  const posts = getPostsByCreatedDateOrder();
-
-  const renderPosts = () => {
+  const RenderLastest = () => {
     if (showSkeleton) {
-      return _.map(posts, (_, index) => (
+      return _.map(blogPosts, (_, index) => (
         <SkeletonBlogPost key={index} />
       ));
-    } else if (posts.length) {
-      return <div className="pb-2">{posts}</div>;
+    } else if (blogPosts.length) {
+      return <div className="pb-2">{<RenderBlogPosts/>}</div>;
     } else {
       return <NoPostsFound />;
     }
@@ -41,7 +36,7 @@ const BlogPosts: React.FC<IBlogPosts> = ({
   return (
     <>
       <div className="md:pr-20 xl:pr-96">
-        {renderPosts()}
+        <RenderLastest/>
       </div>
     </>
   );
