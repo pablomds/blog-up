@@ -72,7 +72,9 @@ const LoginPage = () => {
             render={({ field }) => (
               <Input
                 {...field}
+                inputMode="email"
                 type="email"
+                autoComplete="on"
                 placeholder={"Whats your email ?"}
                 error={errors.email?.message}
                 icon={<AtSign className="w-5 h-5 opacity-60" />}
@@ -87,6 +89,7 @@ const LoginPage = () => {
                 {...field}
                 type={showPassword ? "password" : "text"}
                 autoComplete="on"
+                inputMode="text"
                 placeholder={"Whats your password ?"}
                 error={errors.password?.message}
                 icon={
