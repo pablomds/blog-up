@@ -12,6 +12,8 @@ const BlogPost = ({ post } : any) => {
   const hashtags = post.text.match(/#[^\s#]+/g);
 
   const slicedHashtags: any[] = _.slice(hashtags,0,3);
+
+  const content = post.text.split("#")[0].trim();
   
   return (
     <div className="md:flex md:flex-row md:gap-x-5 pb-8">
@@ -27,7 +29,7 @@ const BlogPost = ({ post } : any) => {
           </span>
           <div className="flex flex-col gap-y-3">
             <ReadMoreText
-              text={post.text}
+              text={content}
               readMoreLink={`/post/${post.id}`}
             />
             <div className="flex flex-row justify-between">
