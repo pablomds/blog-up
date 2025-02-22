@@ -51,7 +51,6 @@ const BlogPostDetailsPage = () => {
 
   useEffect(() => {
     if (selectedPost) {
-      // Simulate loading with a timeout
       const timer = setTimeout(() => {
         setPost(selectedPost);
         setIsLoading(false);
@@ -81,9 +80,20 @@ const BlogPostDetailsPage = () => {
       {post ? (
         <>
           <div className="flex flex-col gap-y-3">
-            <h1 className="font-inria-sans text-3xl text-blog-up-green">
-              {post.title}
-            </h1>
+            <div className="flex gap-x-4">
+              <h1 className="font-inria-sans text-3xl text-blog-up-green">
+                {post.title}
+              </h1>
+              {currentUser.id === post.createdBy && (
+                <Link
+                  to={`/create-post/${post.id}`}
+                  type="submit"
+                  className="font-inria-sans font-bold rounded-[10px] text-xl bg-blog-up-green hover:bg-blog-up-green-dark h-10 w-20 text-blog-up-black cursor-pointer flex justify-center items-center gap-x-2"
+                >
+                  {"EDIT"}
+                </Link>
+              )}
+            </div>
             <span className="font-inria-sans text-base text-blog-up-gray font-light">
               written by {post.author}
             </span>
@@ -99,21 +109,17 @@ const BlogPostDetailsPage = () => {
           <div className="grid grid-flow-row grid-cols-3 gap-2">
             <Hashtags hashtags={hashtags} />
           </div>
-          {currentUser.id === post.createdBy && (
-            <Link
-              to={`/create-post/${post.id}`}
-              type="submit"
-              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green hover:bg-blog-up-green-dark h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-            >
-              {"EDIT"}
-            </Link>
-          )}
         </>
       ) : (
         <>
           <div className="font-inria-sans flex flex-col gap-y-4">
-            <span className="text-lg text-blog-up-gray hover:text-blog-up-gray">This Post Doesn't Exists!</span>
-            <Link to="/lastest" className="flex items-center gap-x-2 bg-blog-up-green text-blog-up-black p-2 rounded-xl w-52 text-lg">
+            <span className="text-lg text-blog-up-gray hover:text-blog-up-gray">
+              This Post Doesn't Exists!
+            </span>
+            <Link
+              to="/lastest"
+              className="flex items-center gap-x-2 bg-blog-up-green text-blog-up-black p-2 rounded-xl w-52 text-lg"
+            >
               Go Back To Lastest
               <TrendingUp className="" />
             </Link>
