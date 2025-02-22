@@ -5,10 +5,12 @@ import { X, Search } from 'lucide-react';
 
 import { selectPosts } from '@/Redux/Slices/postsSlice';
 import BlogPost from '@/Components/BlogPosts/BlogPost';
+import { selectUserId } from '@/Redux/Slices/userSlice';
 
 const SearchPostPage = () => {
   const [postTitle, setPostTitle] = useState<string>("");
   const blogPosts = useSelector(selectPosts);
+  const userId = useSelector(selectUserId);
 
   const handleInput = (e: any) => {
     const searchTerm = e.target.value;
@@ -53,7 +55,7 @@ const SearchPostPage = () => {
       </div>
       <div className="md:pr-20 xl:pr-96">
         {filteredPosts.map((post) => (
-          <BlogPost post={post} />
+          <BlogPost post={post} userId={userId} />
         ))}
       </div>
     </div>
