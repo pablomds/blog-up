@@ -21,7 +21,7 @@ const LandingPage = () => {
           <div>
             <Link
               to="#about"
-              className="font-inria-sans text-[#0E0E0E] text-lg xs:text-xl lg:text-2xl bg-blog-up-white py-1 px-11 rounded-[10px]"
+              className="font-inria-sans text-blog-up-black rounded-[10px] w-52 max-w-[150px] text-lg bg-blog-up-white hover:bg-blog-up-gray px-4 py-2"
             >
               READ MORE
             </Link>

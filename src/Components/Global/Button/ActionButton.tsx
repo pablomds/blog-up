@@ -20,7 +20,7 @@ const ActionButton: React.FC<IButton> = ({ variant, type, label }) => {
   return (
     <button
       type={type}
-      className={`${getButtonColor()} font-inria-sans font-bold rounded-[10px] max-w-[150px] text-2xl h-10 w-52 cursor-pointer flex justify-center items-center `}
+      className={`font-inria-sans font-bold rounded-[10px] max-w-[150px] ${getButtonColor()}  text-lg h-10 w-52 max-w-[150px] cursor-pointer`}
     >
       {label}
     </button>

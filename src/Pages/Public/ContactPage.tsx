@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { motion } from "motion/react";
 import emailjs from '@emailjs/browser';
+import { AtSign, User } from "lucide-react";
 
 import Loader from "@/Components/Global/Loader/Loader";
 import CustomToast from "@/Components/Global/Toast/CustomToast";
 import backgroundContact from "@/Assets/Background/background-contact.jpg";
+import Input from "@/Components/Global/Input/Input";
+import ActionButton from "@/Components/Global/Button/ActionButton";
 
 const contactSchema = yup.object({
   name: yup.string().max(40, "Your must have less than 40 characters").required("Your name is required"),
@@ -19,7 +22,7 @@ type ContactFormData = yup.InferType<typeof contactSchema>;
 
 const ContactPage = () => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>({
+  const { register, control, handleSubmit, formState: { errors } } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema),
     mode: "onSubmit" // Errors will only show after submitting
   });
@@ -58,7 +61,9 @@ const ContactPage = () => {
       }}
       viewport={{ amount: 0.6 }}
       id="contact"
-      className={`h-screen bg-blog-up-black relative flex flex-row md:gap-x-28 select-none ${isEmailSent && 'overflow-hidden'}`}
+      className={`h-screen bg-blog-up-black relative flex flex-row md:gap-x-28 select-none ${
+        isEmailSent && "overflow-hidden"
+      }`}
     >
       <div
         className="max-md:hidden w-1/5 h-full bg-blog-up-white left-0 top-0 bg-cover bg-center flex justify-between items-center relative"
@@ -69,9 +74,7 @@ const ContactPage = () => {
         <h1 className="font-inria-sans text-7xl -rotate-90 z-10">Contact</h1>
         <div className="h-full w-1 bg-white z-10"></div>
       </div>
-      {
-        isEmailSent && <Loader />
-      }
+      {isEmailSent && <Loader />}
       <div className="h-full w-full md:w-4/5 px-6 pt-13 pb-5 md:pt-24  flex flex-col justify-between gap-y-2">
         <div className="flex flex-col items-center md:items-start md:gap-y-12">
           <h1 className="md:hidden font-inria-sans text-5xl">Contact</h1>
@@ -87,36 +90,30 @@ const ContactPage = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="pt-9 flex flex-col w-full gap-y-8 md:max-w-[508px]"
           >
-            <div className="flex flex-col">
-              <input
-                {...register("name")}
-                type="text"
-                className="font-inria-sans w-full h-14 border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none"
-                placeholder="Whats your name ?"
-              />
-              <span
-                className={`font-inria-sans text-blog-up-red h-5 transition-all duration-300 ${
-                  errors.name ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {errors.name?.message || " "}
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <input
-                {...register("email")}
-                type="email"
-                className="font-inria-sans w-full h-14 border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none"
-                placeholder="Whats your email ?"
-              />
-              <span
-                className={`font-inria-sans text-blog-up-red h-5 transition-all duration-300 ${
-                  errors.name ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {errors.email?.message || " "}
-              </span>
-            </div>
+            <Controller
+              control={control}
+              name={"name"}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder={"Whats your name ?"}
+                  error={errors.name?.message}
+                  icon={<User className="w-5 h-5 opacity-60" />}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name={"email"}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder={"Whats your email ?"}
+                  error={errors.email?.message}
+                  icon={<AtSign className="w-5 h-5 opacity-60" />}
+                />
+              )}
+            />
             <div className="flex flex-col">
               <textarea
                 {...register("message")}
@@ -131,12 +128,7 @@ const ContactPage = () => {
                 {errors.message?.message || " "}
               </span>
             </div>
-            <button
-              type="submit"
-              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-green h-10 w-52 md:max-h-[40px] md:max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center"
-            >
-              {"SEND IT"}
-            </button>
+            <ActionButton type="submit" variant="valid" label={"SEND IT"}/>
           </form>
         </div>
         <div className="flex items-end justify-start md:justify-start">
