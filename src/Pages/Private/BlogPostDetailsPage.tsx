@@ -51,7 +51,6 @@ const BlogPostDetailsPage = () => {
 
   useEffect(() => {
     if (selectedPost) {
-      // Simulate loading with a timeout
       const timer = setTimeout(() => {
         setPost(selectedPost);
         setIsLoading(false);
