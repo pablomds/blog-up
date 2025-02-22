@@ -4,6 +4,8 @@ import _ from 'lodash';
 import BlogPost from '@/Components/BlogPosts/BlogPost';
 import NoPostsFound from './NoPostsFound';
 import SkeletonBlogPost from './SkeletonBlogPost';
+import { useSelector } from 'react-redux';
+import { selectUserId } from '@/Redux/Slices/userSlice';
 
 
 
@@ -18,8 +20,10 @@ const BlogPosts: React.FC<IBlogPosts> = ({
   showSkeleton,
 }) => {
 
+  const userId = useSelector(selectUserId);
+  
   const RenderBlogPosts = () => 
-    _.map(blogPosts,(post, index) => <BlogPost post={post} key={index} />)
+    _.map(blogPosts,(post, index) => <BlogPost post={post} key={index} userId={userId} />)
 
   const RenderLastest = () => {
     if (showSkeleton) {
