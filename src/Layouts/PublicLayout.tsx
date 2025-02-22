@@ -1,18 +1,23 @@
+import { ReactNode } from 'react';
+import { Outlet } from 'react-router';
+
 import LandingPage from '@/Pages/Public/LandingPage';
 import AboutPage from '@/Pages/Public/AboutPage';
 import ContactPage from '@/Pages/Public/ContactPage';
 
 import NavBar from '@/Components/Global/NavBar/NavBar';
 
-const PublicLayout = () => {
+interface IPublicLayout {
+  children?: ReactNode
+}
+
+const PublicLayout: React.FC<IPublicLayout> = (props) => {
 
   return (
-    <div className="bg-[#2C2C2C]">
+    <>
       <NavBar />
-      <LandingPage />
-      <AboutPage />
-      <ContactPage/>
-    </div>
+      {props.children ? props.children : <Outlet />}
+    </>
   );
 };
 
