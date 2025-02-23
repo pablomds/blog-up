@@ -88,9 +88,9 @@ const BlogPostDetailsPage = () => {
                 <Link
                   to={`/create-post/${post.id}`}
                   type="submit"
-                  className="font-inria-sans font-bold rounded-[10px] text-xl bg-blog-up-green hover:bg-blog-up-green-dark h-10 w-20 text-blog-up-black cursor-pointer flex justify-center items-center gap-x-2"
+                  className="font-inria-sans font-bold rounded-[10px] text-lg bg-blog-up-green hover:bg-blog-up-green-dark w-20 text-blog-up-black cursor-pointer text-center"
                 >
-                  {"EDIT"}
+                  EDIT
                 </Link>
               )}
             </div>
