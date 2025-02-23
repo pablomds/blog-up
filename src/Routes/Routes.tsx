@@ -3,41 +3,136 @@ import { useSelector } from "react-redux";
 
 import { selectUser } from '@/Redux/Slices/userSlice';
 
-import PublicLayout from '@/Layouts/PublicLayout'
-import PrivateLayout from '@/Layouts/PrivateLayout'
-import LoginPage from '@/Pages/Public/LoginPage'
-import SignUpPage from '@/Pages/Public/SignUpPage'
-import LastestPage from '@/Pages/Private/LastestPage';
-import BlogPostDetailsPage from '@/Pages/Private/BlogPostDetailsPage';
-import CreateOrEditPostPage from '@/Pages/Private/CreateOrEditPostPage';
-import MyProfilPage from '@/Pages/Private/MyProfilPage';
-import SearchPostPage from '@/Pages/Private/SearchPostPage';
-import NotFoundPage from '@/Pages/Public/NotFoundPage';
-import HomePage from '@/Pages/Public/HomePage';
+import PublicLayout from '@/Layouts/PublicLayout';
+import PrivateLayout from '@/Layouts/PrivateLayout';
+import { lazy, Suspense } from 'react';
+import Loader from '@/Components/Global/Loader/Loader';
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const HomePage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Public/HomePage"))
+);
+const LoginPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Public/LoginPage"))
+);
+const SignUpPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Public/SignUpPage"))
+);
+const NotFoundPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Public/NotFoundPage"))
+);
+
+const MyProfilPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Private/MyProfilPage"))
+);
+const SearchPostPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Private/SearchPostPage"))
+);
+const LastestPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Private/LastestPage"))
+);
+const BlogPostDetailsPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Private/BlogPostDetailsPage"))
+);
+const CreateOrEditPostPage = lazy(() =>
+  sleep(500).then(() => import("@/Pages/Private/CreateOrEditPostPage"))
+);
 
 
-export const PublicRoutes = () => {
-  return (
-    <Route element={<PublicLayout />}>
-      <Route key="home-page" path="/" element={<HomePage />} />
-      <Route key="login-page" path="/login" element={<LoginPage />} />
-      <Route key="signup-page" path="/sign-up" element={<SignUpPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Route>
-  )
-};
+
+
+export const PublicRoutes = () => [
+  <Route key="public-layout" element={<PublicLayout />}>
+    <Route
+      key="home-page"
+      path="/"
+      element={
+        <Suspense fallback={<Loader />}>
+          <HomePage />
+        </Suspense>
+      }
+    />
+    <Route
+      key="login-page"
+      path="/login"
+      element={
+        <Suspense fallback={<Loader />}>
+          <LoginPage />
+        </Suspense>
+      }
+    />
+    <Route
+      key="signup-page"
+      path="/sign-up"
+      element={
+        <Suspense fallback={<Loader />}>
+          <SignUpPage />
+        </Suspense>
+      }
+    />
+    <Route
+      key="not-found-page"
+      path="*"
+      element={
+        <Suspense fallback={<Loader />}>
+          <NotFoundPage />
+        </Suspense>
+      }
+    />
+  </Route>,
+];
 
 export const PrivateRoutes = () => {
-
   const currentUser = useSelector(selectUser);
 
-  return (
-    <Route element={<PrivateLayout currentUser={currentUser} />}>
-      <Route key="lastest-page" path="/my-profil" element={<MyProfilPage />} />
-      <Route key="lastest-page" path="/search" element={<SearchPostPage />} />
-      <Route key="lastest-page" path="/lastest" element={<LastestPage />} />
-      <Route key="post-details-page" path="/post/:id" element={<BlogPostDetailsPage />} />
-      <Route key="create-new-post-page" path="/create-post/:id?" element={<CreateOrEditPostPage />} />
-    </Route>
-  );
+  return [
+    <Route key="private-layout" element={<PrivateLayout currentUser={currentUser} />}>
+      <Route
+        key="my-profil"
+        path="/my-profil"
+        element={
+          <Suspense fallback={<Loader />}>
+            <MyProfilPage />
+          </Suspense>
+        }
+      />
+      <Route
+        key="search"
+        path="/search"
+        element={
+          <Suspense fallback={<Loader />}>
+            <SearchPostPage />
+          </Suspense>
+        }
+      />
+      <Route
+        key="lastest"
+        path="/lastest"
+        element={
+          <Suspense fallback={<Loader />}>
+            <LastestPage />
+          </Suspense>
+        }
+      />
+      <Route
+        key="post-details"
+        path="/post/:id"
+        element={
+          <Suspense fallback={<Loader />}>
+            <BlogPostDetailsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        key="create-post"
+        path="/create-post/:id?"
+        element={
+          <Suspense fallback={<Loader />}>
+            <CreateOrEditPostPage />
+          </Suspense>
+        }
+      />
+    </Route>,
+  ];
 };
