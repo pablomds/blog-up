@@ -16,8 +16,8 @@ const BackgroundImage: React.FC<IBackgroundImage> = ({ backgroundImage, title })
           className="hidden md:flex h-full w-1/4 left-0 justify-center items-center bg-white bg-center bg-cover relative"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          <div className="w-[5px] h-full z-10 bg-blog-up-white mix-blend-exclusion absolute right-0 opacity-75" />
-          <div className="font-inria-sans -rotate-90 text-8xl z-10 mix-blend-difference text-nowrap">
+          <div className="w-[5px] h-full z-10 bg-blog-up-green-dark mix-blend-exclusion absolute right-0 opacity-75" />
+          <div className="font-inria-sans -rotate-90 text-8xl z-10 text-nowrap text-blog-up-green-dark/80">
             {title}
           </div>
           <div className="absolute bg-black h-full w-full opacity-75" />
