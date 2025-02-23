@@ -13,6 +13,7 @@ import Input from '@/Components/Global/Input/Input';
 import CustomToast from '@/Components/Global/Toast/CustomToast';
 import backgroundSignUp from "@/Assets/Background/background-sign-up.jpg";
 import ActionButton from '@/Components/Global/Button/ActionButton';
+import BackgroundImage from '@/Components/Global/BackgroundImage/BackgroundImage';
 
 
 const SignUpPage = () => {
@@ -44,16 +45,7 @@ const SignUpPage = () => {
     };
   return (
     <div className="h-screen w-screen overflow-hidden relative md:flex md:flex-row md:gap-x-26 select-none">
-      <div
-        className="hidden md:flex h-full w-1/4 left-0 justify-center items-center bg-white bg-center bg-cover relative"
-        style={{ backgroundImage: `url(${backgroundSignUp})` }}
-      >
-        <div className="w-[5px] h-full z-10 bg-blog-up-white mix-blend-exclusion absolute right-0 opacity-75" />
-        <div className="font-inria-sans -rotate-90 text-8xl z-10 mix-blend-difference text-nowrap">
-          Sign Up
-        </div>
-        <div className="absolute bg-black h-full w-full opacity-75" />
-      </div>
+      <BackgroundImage backgroundImage={backgroundSignUp} title="SIGN UP" />
       <div className="h-full w-full px-6 flex flex-col justify-center gap-10">
         <div className="text-center xs:text-start">
           <h1 className="font-inria-sans text-5xl">Welcome</h1>

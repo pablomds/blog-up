@@ -18,6 +18,8 @@ import CustomToast from '@/Components/Global/Toast/CustomToast';
 import backgroundLogin from "@/Assets/Background/background-login.jpg"
 import { AppDispatch } from '@/Redux/configureStore';
 import ActionButton from '@/Components/Global/Button/ActionButton';
+import BackgroundImage from '@/Components/Global/BackgroundImage/BackgroundImage';
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(true);
@@ -50,11 +52,7 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden relative md:flex md:flex-row md:gap-x-26 select-none">
-      <div className="hidden md:flex h-full w-1/4 left-0 justify-center items-center bg-white bg-center bg-cover relative" style={{ backgroundImage: `url(${backgroundLogin})` }}>
-      <div className="w-[5px] h-full z-10 bg-blog-up-white mix-blend-exclusion absolute right-0 opacity-75" />
-      <div className="font-inria-sans -rotate-90 text-8xl z-10 mix-blend-difference text-nowrap">Login</div>
-        <div className="absolute bg-black h-full w-full opacity-75" />
-      </div>
+      <BackgroundImage backgroundImage={backgroundLogin} title={"LOGIN"}/>
       <div className="h-full w-full px-6 flex flex-col justify-center gap-10">
         <div className="text-center xs:text-start">
           <h1 className="font-inria-sans text-5xl">Welcome</h1>
@@ -111,7 +109,13 @@ const LoginPage = () => {
         </form>
         <div className="flex flex-col text-xl font-inria-sans bold">
           <span className="text-blog-up-white">Don't have an account ?</span>
-          <Link to="/sign-up" className="text-blog-up-green cursor-pointer hover:text-blog-up-green-dark"> Sign Up</Link>
+          <Link
+            to="/sign-up"
+            className="text-blog-up-green cursor-pointer hover:text-blog-up-green-dark"
+          >
+            {" "}
+            Sign Up
+          </Link>
         </div>
       </div>
     </div>

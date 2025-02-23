@@ -11,6 +11,7 @@ import CustomToast from "@/Components/Global/Toast/CustomToast";
 import backgroundContact from "@/Assets/Background/background-contact.jpg";
 import Input from "@/Components/Global/Input/Input";
 import ActionButton from "@/Components/Global/Button/ActionButton";
+import BackgroundImage from "@/Components/Global/BackgroundImage/BackgroundImage";
 
 const contactSchema = yup.object({
   name: yup.string().max(40, "Your must have less than 40 characters").required("Your name is required"),
@@ -61,22 +62,14 @@ const ContactPage = () => {
       }}
       viewport={{ amount: 0.6 }}
       id="contact"
-      className={`h-screen bg-blog-up-black relative flex flex-row md:gap-x-28 select-none ${
+      className={`h-screen bg-blog-up-black relative flex flex-row md:gap-x-26 select-none ${
         isEmailSent && "overflow-hidden"
       }`}
     >
-      <div
-        className="max-md:hidden w-1/5 h-full bg-blog-up-white left-0 top-0 bg-cover bg-center flex justify-between items-center relative"
-        style={{ backgroundImage: `url(${backgroundContact})` }}
-      >
-        <div className="absolute bg-black h-full w-full opacity-60" />
-        <div />
-        <h1 className="font-inria-sans text-7xl -rotate-90 z-10">Contact</h1>
-        <div className="h-full w-1 bg-white z-10"></div>
-      </div>
+      <BackgroundImage backgroundImage={backgroundContact} title={"CONTACT"} />
       {isEmailSent && <Loader />}
       <div className="h-full w-full md:w-4/5 px-6 pt-13 pb-5 md:pt-24  flex flex-col justify-between gap-y-2">
-        <div className="flex flex-col items-center md:items-start md:gap-y-12">
+        <div className="flex flex-col items-start md:gap-y-12">
           <h1 className="md:hidden font-inria-sans text-5xl">Contact</h1>
           <div className="pt-6 gap-y-3 md:gap-y-2">
             <p className="font-inria-sans text-xl md:text-4xl">
@@ -117,7 +110,7 @@ const ContactPage = () => {
             <div className="flex flex-col">
               <textarea
                 {...register("message")}
-                className="font-inria-sans w-full h-[215px] border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none resize-none"
+                className="font-inria-sans w-full h-[215px] max-w-[508px] border-2 border-blog-up-green py-4 pl-6 rounded-[5px] focus:outline-none resize-none"
                 placeholder="Whats your message ?"
               />
               <span
