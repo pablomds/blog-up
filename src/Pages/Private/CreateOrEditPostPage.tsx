@@ -110,7 +110,7 @@ const CreateOrEditPostPage = () => {
 
   return (
     <div className="h-full w-full flex flex-col items-start gap-y-7 mx-auto md:items-start md:px-20 px-10 pt-28 pb-8">
-      <div className="flex flex-col">
+      <div className="flex flex-col select-none">
         <div className="h-[5px] w-[44px] bg-blog-up-green" />
         <h1 className="font-inria-sans text-2xl">
           {selectedPost ? `Edit Post` : "Create a New Post"}
@@ -159,10 +159,9 @@ const CreateOrEditPostPage = () => {
           {selectedPost && isOwner() ? (
             <div
               onClick={() => onDelete()}
-              className="font-inria-sans font-bold rounded-[10px] text-2xl bg-blog-up-red hover:bg-blog-up-gray h-10 w-52 max-w-[150px] text-blog-up-white cursor-pointer flex justify-center items-center select-none"
+              className="font-inria-sans font-bold rounded-[10px] text-lg bg-blog-up-red hover:bg-blog-up-gray h-10 w-52 max-w-[150px] text-blog-up-black cursor-pointer flex justify-center items-center select-none"
             >
               {"DELETE"}
-              <Trash2 className="text-blog-up-white" />
             </div>
           ) : (
             <></>
