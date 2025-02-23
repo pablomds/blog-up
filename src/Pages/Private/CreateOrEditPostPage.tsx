@@ -4,7 +4,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
-import { Trash2 } from 'lucide-react';
 
 import { addPost, selectPostWithId, updatePost as updatePostInRedux, fetchDeletePost } from '@/Redux/Slices/postsSlice';
 import { selectUser, setUser, fetchDeletePostFromPostsIds } from '@/Redux/Slices/userSlice';
